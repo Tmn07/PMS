@@ -50,8 +50,9 @@ class UserModel extends RelationModel{
     {
         $re = $this->where("email = '$email'")->find();
         if (isset($re)) {
-            return 0;
+            return false;
         }
+        else return true;
     }
 
 }
