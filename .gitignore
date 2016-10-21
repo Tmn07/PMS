@@ -2,3 +2,6 @@
 Runtime
 ThinkPHP/*
 .idea
+Application/Html/*
+
+Public/photo/*
