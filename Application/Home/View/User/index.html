@@ -1,2 +1,49 @@
 用户首页
 <a href="__URL__/logout">logout</a>
+
+<br><br>
+
+<div class="albums" style="width: 700px;border:1px solid black;">
+	<p>全部相册</p>
+
+	<volist name='albums' id='vo'>
+		<a href="__URL__/show_photos?id={$vo.id}">{$vo.name}</a> &nbsp
+	</volist>
+	<span id="show_add">+</span>
+	<div class="add_album" hidden>
+		<hr>
+		<form action="__URL__/add_album" method="post">
+			相册名：
+			<input type="text" name="name">
+			描述：
+			<input type="text" name="description">
+			<input type="submit" value="提交" >
+		</form>
+	</div>
+
+</div>
+
+<br>
+
+<div class="upload" style="width: 700px;border:1px solid black;">
+	<p>上传照片</p>
+	<form action="__URL__/upload" enctype="multipart/form-data" method="post" >
+	<input type="text" name="name" />
+	<select name='aid'>
+		<volist name='albums' id='vo'>
+			<option value="{$vo.id}">{$vo.name}</option>
+		</volist>
+	</select>
+	<input type='file'  name='photo'>
+	<!-- <input type='file'  name='photo[]'> -->
+	<!-- <input type='file'  name='photo[]'> -->
+	<input type="submit" value="提交" >
+	</form>
+</div>
+
+<script type="text/javascript" src='__JS__/jquery.js'></script>
+<script type="text/javascript">
+	$("#show_add").click(function(){
+		$('.add_album').show();
+	})
+</script>

@@ -5,17 +5,76 @@ class UserController extends BaseController {
     public function index(){
     	// 检查登录
     	if (session('?user')) {
-    		dump(session('user'));
+    		// dump(session('user'));
     	}
     	else{
     		$this->redirect('index/index');
     	}
+
+        $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
+
+        $this->assign('info',$arr);
+        // dump($arr);
+        $this->assign('albums',$arr['album']);
+
     	$this->display();
+    }
+
+    public function show_photos()
+    {
+        $aid = I('get.id');
+        $model = D('album');
+        $ret = $model->pd($aid,session('userid'));
+        if ($ret) {
+            $arr = $model->relation(true)->where(array('id'=>$aid))->find();
+            // dump($arr);
+            $this->assign('username',session('user'));
+            $this->assign('photos',$arr['photo']);
+            $this->display();
+        }
+        else{
+            $this->error('非该用户相册','index',2);
+        }
+    }
+
+    public function add_album(){
+        $data = I('post.');
+        $data['addtime'] = date('Y-m-d');
+        $data['userid'] = session('userid');
+        dump($data);
+        M('album')->add($data);
+    }
+
+    public function upload(){
+        $upload = new \Think\Upload();// 实例化上传类
+        $upload->maxSize   =     3145728 ;// 设置附件上传大小
+        $upload->exts      =     array('jpg', 'png', 'jpeg');// 设置附件上传类型
+        $upload->rootPath  =     './Public/photo/'; // 设置附件上传根目录
+        $upload->autoSub   =     false;
+        $upload->savePath  =     session('user').'/'; // 设置附件上传（子）目录
+        // 上传文件 
+        $info   =   $upload->upload();
+        if(!$info) {// 上传错误提示错误信息
+            $this->error($upload->getError());
+        }else{// 上传成功
+            // var_dump($info);
+            $model = M('photo');
+            $data = array();
+            $data['filename'] = $info['photo']['savename'];
+            $data['addtime'] = date('Y-m-d');
+            $data['albumid'] = I('post.aid');
+            $data['name'] = I('post.name');
+            $model->add($data);
+            $this->success('上传成功！');
+            // foreach($info as $file){
+            //     echo $file['savepath'].$file['savename'];
+            // }
+        }
     }
 
     public function signin(){
     	$data = $_POST;
-    	$status1 = D('user')->login($data);
+    	$status1 = D('User')->login($data);
     	if ($status1 || $status2) {
     		$this->redirect('index');
     	}

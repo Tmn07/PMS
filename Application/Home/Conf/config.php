@@ -12,4 +12,10 @@ return array(
 	'DB_CHARSET'=> 'utf8', // 字符集
 	'DB_DEBUG'  =>  TRUE, // 数据库调试模式 开启后可以记录SQL日志 3.2.3新增
 	'SHOW_PAGE_TRACE' => TRUE, 
+	'TMPL_PARSE_STRING'  =>array(
+     '__JS__'     => __ROOT__.'/Public/js', // 增加新的JS类库路径替换规则
+     '__CSS__'     => __ROOT__.'/Public/css', // 增加新的CSS类库路径替换规则
+     '__PH__' 	=> __ROOT__.'/Public/photo',
+	)
+	
 );
