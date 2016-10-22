@@ -37,11 +37,49 @@ class UserController extends BaseController {
         }
     }
 
+    public function show_photo()
+    {
+        $id = I("get.id");
+        $model = D('photo');
+        $arr = $model->where(array('id'=>$id,'userid'=>session('userid')))->find();
+        if (isset($arr)) {
+            $this->assign('username',session('user'));
+            $this->assign('photo',$arr);
+            if ($arr['share']) {
+                # code...
+                $share_arr = M('share')->where(array('photoid'=>$arr['id']))->find();
+                $this->assign('sid',$share_arr['id']);
+            }
+            $this->display();
+        }
+        else{
+            $this->error('非该用户相片','index',2);
+        }   
+        // dump($arr);
+    }
+
+    public function set_share(){
+        $id = I("get.id");
+        $model = D('photo');
+        $arr = $model->where(array('id'=>$id,'userid'=>session('userid')))->find();
+        if (isset($arr)) {
+            $arr['share'] = 1;
+            $ret = $model->save($arr);
+            $data['photoid'] = $arr['id'];
+            $data['url'] = session('user').'/'.$arr['filename'];
+            $sid = M('share')->add($data);
+            $this->success('分享成功',U("index/share?id=$sid"),2);
+        }
+        else{
+            $this->error('非该用户相片','index',2);
+        }
+    }
+
     public function add_album(){
         $data = I('post.');
         $data['addtime'] = date('Y-m-d');
         $data['userid'] = session('userid');
-        dump($data);
+        // dump($data);
         M('album')->add($data);
     }
 

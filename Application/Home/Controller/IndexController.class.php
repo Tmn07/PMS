@@ -12,6 +12,12 @@ class IndexController extends BaseController {
     	$this->display();
     }
     public function share(){
+        $pid = I('get.id');
+        $arr = M('share')->find($pid);
+        // dump($arr);
+        $this->assign('url',$arr['url']);
+        $this->display();
+
     	$this->show("您的好友username给您分享的照片");
     }
     public function tim(){

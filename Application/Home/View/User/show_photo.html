@@ -1,0 +1,13 @@
+<img src="__PH__/{$username}/{$photo.filename}" style="width:100px;height:100px">
+<!-- <link rel="stylesheet" type="text/css" href="__CSS__/test.css"> -->
+{$photo.name}
+<br>
+
+
+<if condition="$photo.share eq 1"> 
+	已经分享过了，<a href="__MODULE__/index/share?id={$sid}"> 在这里</a>
+	<a>取消分享</a>
+<else /> 
+	<a href="__URL__/set_share?id={$photo.id}">设置分享</a>
+</if>
+
