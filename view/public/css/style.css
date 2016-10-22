@@ -1,0 +1,128 @@
+body{
+	font-family: 'Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif;
+	background-color: #f7fafc;
+	text-align: center;
+}
+
+.index-main{
+	
+	height: 600px;
+	width: 320px;
+	margin-left: 50%;
+	margin-top: 100px;
+	transform: translate(-50%, 0);
+  	margin:0 auto;
+}
+
+.logo{
+	margin-left: -20px;
+	margin-top: -50px;
+	background: url(../logo/logo.png)no-repeat;
+	height: 150px;
+	width: 100%;
+}
+
+.index-header{
+	text-align: center;
+}
+
+.index-nav{
+	font-size: 18px;
+	text-align: center;
+	position: relative;
+	margin-bottom: 15px;
+}
+
+.index-nav a{
+	opacity: 0.7;
+	text-decoration: none;
+	line-height: 35px;
+
+}
+
+.index-nav a:first-child{
+	margin-left: -15px;
+}
+
+.index-nav a:nth-child(2){
+	margin-left: 30px;
+}
+
+.navs-slider-bar{
+	background-color: #0f88eb;
+	height: 2px;
+	width: 40px;
+	position: absolute;
+	bottom: 0;
+	left: 98px;
+}
+
+.index-form{
+	position: relative;
+}
+
+.signin{
+	display: none;
+	position: relative;
+}
+
+.signup input:first-child{
+	border-radius: 4px 4px 0 0;
+}
+.signup input:nth-child(2){
+	border-radius: 0;
+}
+.signup input:nth-child(3){
+	border-radius: 0 0 4px 4px;
+	margin-bottom: 20px;
+}
+
+.signin input:first-child{
+	border-radius: 4px 4px 0 0;
+}
+.signin input:nth-child(2){
+	border-radius: 0 0 4px 4px;
+	margin-bottom: 20px;
+}
+
+.form-input{
+	box-shadow: none;
+	height: 50px;
+}
+
+.form-submit{
+	height: 40px;
+	margin-bottom: 20px;
+}
+
+.remember-me{
+	float: left;
+}
+
+.forgot-pass{
+	text-decoration: none;
+	float: right;
+}
+.forgot-pass:hover{
+	text-decoration: none;
+}
+.forgot-pass:focus{
+	text-decoration: none;
+}
+
+.other-sigup{
+	margin-top: 30px;
+	text-decoration: none;
+	display: block;
+	position: absolute;
+}
+.other-sigup:hover{
+	text-decoration: none;
+}
+.other-sigup:focus{
+	text-decoration: none;
+}
+
+.footer{
+	text-align: center;
+}
