@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>main</title>
+	<script type="text/javascript" src="public/lib/js/jquery.min.js"></script>
+	<script type="text/javascript" src="public/lib/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="public/lib/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="public/css/style.css">
+</head>
+<body>
+	<div class="index-main ">
+		<div class="index-header">
+			<div class="logo"></div>
+			<h4>记录，分享您的每一丝笑容</h4>
+		</div>
+		<div class="index-nav">
+			<a id="signup" href="#">注册</a>
+			<a id="signin" href="#">登陆</a>
+			<span class="navs-slider-bar"></span>
+		</div>
+		<div class="index-form-container">
+			<form role="form" class="index-form signup">
+				<input type="text" class="form-control form-input" id="name" placeholder="账号名">
+				<input type="text" class="form-control form-input" id="name" placeholder="电话/邮箱">
+				<input type="text" class="form-control form-input" id="name" placeholder="密码">
+				<input type="button" class="btn btn-info form-control form-submit" name="submit" value="注册星图">
+			</form>
+			<form role="form" class="index-form signin">
+				<input type="text" class="form-control form-input" id="name" placeholder="电话/邮箱">
+				<input type="text" class="form-control form-input" id="name" placeholder="密码">
+				<input type="button" class="btn btn-info form-control form-submit" name="submit" value="登录">
+				<div class="remember-me">
+					<input type="checkbox"> 记住我
+				</div>
+				<a class="forgot-pass" href="#">忘记密码</a>	
+				<a class="other-sigup" href="#">其他社交账号登陆</a>
+			</form>
+		</div>
+
+	</div>
+	<div class="footer">
+			<span>© 星图</span>
+			<span>·</span>
+			<a href="#">github</a>
+			<span>·</span>
+			<a href="#">联系我们</a>
+			<span>·</span>
+			<span>powered by 
+				<a href="#">hitlxc</a>
+				<span>·</span>
+				<a href="#">Tmn07</a>
+			</span>
+		</div>
+</body>
+
+<script type="text/javascript">
+	$('#signup').click(function(){
+		$('.signin').css('display','none');
+		$('.signup').css('display','block');
+		$('.navs-slider-bar').animate({left:'98px'})
+	})
+
+	$('#signin').click(function(){
+		$('.signup').css('display','none');
+		$('.signin').css('display','block');
+		$('.navs-slider-bar').animate({left:'168px'})
+	})
+	//$('.navs-slider-bar').animate({left:'168px'})  98px
+	//$('.signup').css('display','none')
+</script>
+</html>
