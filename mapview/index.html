@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="echarts.js"></script>
+    <script src="jquery.js"></script>
+</head>
+<body style="height: 100%">
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 100%;height:100%;"></div>
+    <script type="text/javascript">
+        
+
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter:function(params){
+                	return '<h2>' + (params.name?params.name:'南海诸岛') +'(x)' + '</h2>'
+                }
+            },
+            series: [
+                {
+                    name: '中国',
+                    type: 'map',
+                    mapType: 'china',
+                    //selectedMode : 'multiple',
+                    label: {
+                        normal: {
+                            show: true
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    }
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        $.get('china.json', function (chinaJson) {
+            echarts.registerMap('china', chinaJson);
+            var chart = echarts.init(document.getElementById('main'));
+            chart.setOption(option);
+            chart.on('click', function (params) {
+			   // console.log(params.name?params.name:'南海诸岛');
+			   console.log(params)
+			});
+        });
+
+
+    </script>
+</body>
+</html>
