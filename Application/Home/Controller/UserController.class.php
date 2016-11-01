@@ -17,7 +17,25 @@ class UserController extends BaseController {
         // dump($arr);
         $this->assign('albums',$arr['album']);
 
-    	$this->display();
+        $this->display('index');
+    }
+
+    public function test()
+    {
+        // 检查登录
+        if (session('?user')) {
+            // dump(session('user'));
+        }
+        else{
+            $this->redirect('index/index');
+        }
+
+        $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
+
+        $this->assign('info',$arr);
+        // dump($arr);
+        $this->assign('albums',$arr['album']);
+        $this->display('index2');
     }
 
     public function show_photos()
