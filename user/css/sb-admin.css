@@ -84,7 +84,7 @@ body {
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
     color : white;
-    background-color: #0000CD;
+    background-color: #0822EE;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -94,7 +94,7 @@ body {
     border: 1px solid rgba(0,0,0,.15);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    background-color: #0000EF   ;
+    background-color: #4050EE;
     -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
@@ -154,7 +154,7 @@ ul.alert-dropdown {
     .side-nav li a:focus {
         color : white;
         outline: none;
-        background-color: #0000CD !important;
+        background-color: #0822EE !important;
     }
 }
 
@@ -171,4 +171,28 @@ ul.alert-dropdown {
 
 .side-nav>li>ul>li>a:hover {
     color:  #0000CD;;
+}
+
+/**/
+
+/*相册*/
+
+.album img{
+    height: 200px;
+    width: 200px;
+    background-color: black;
+
+}
+
+.img{
+    margin:6px;
+    padding: 6px;
+    background-color: white;
+    width: 212px;
+    display: inline-block;
+
+}
+
+.img *{
+    cursor: pointer;
 }

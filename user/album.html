@@ -101,7 +101,7 @@
                         <a class="white"  href="index.html"><i class="fa fa-fw fa-dashboard"></i> 首页</a>
                     </li>
                     <li>
-                        <a class="white"  href="album.html"><i class="fa fa-fw fa-photo (alias)"></i> 相册</a>
+                        <a class="white"  href="#"><i class="fa fa-fw fa-photo (alias)"></i> 相册</a>
                     </li>
                     <li>
                         <a class="white"  href="#"><i class="fa fa-fw fa-map"></i> 地图</a>
@@ -118,10 +118,78 @@
             <!-- /.navbar-collapse -->
         </nav>
 
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="page-header">
+                            我的相册
+                        </h3>
+                        
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row album">
+                    <div class="col-lg-12 col-md-12 ">
+                        <div class="img">
+                            <label>
+                                <img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg">
+                                <div class="">  
+                                    <span>美丽三亚</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="img">
+                            
+                                <img id="img-1" src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg">
+                                <div class="">  
+                                    <label for="img-1"><span>美丽三亚</span></label>
+                                </div>
+                            
+                        </div>
+                        <div class="img">
+                            <label>
+                                <img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg">
+                                <div class="">  
+                                    <span>美丽三亚</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="img">
+                            <label>
+                                <img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg">
+                                <div class="">  
+                                    <span>美丽三亚</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="img">
+                            <label>
+                                <img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg">
+                                <div class="">  
+                                    <span>美丽三亚</span>
+                                </div>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
     </div>
     <!-- /#wrapper -->
 
-
+    
 
 
     <!-- jQuery -->
@@ -129,7 +197,15 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../public/lib/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('img').click(function(){
+            alert(this.src)
+        })
+        $('.img').find('span').click(function(){
+            alert($(this).parent().parent().find('img')[0].src)
+        })
 
+    </script>
 </body>
 
 </html>
