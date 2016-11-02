@@ -26,7 +26,7 @@
 	                    <label>
 	                        <img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg">
 	                        <div class="">  
-	                            <a href="__URL__/test2?id={$vo.id}"><span>{$vo.name}</span></a>
+	                            <a href="__URL__/show_photos?id={$vo.id}"><span>{$vo.name}</span></a>
 	                        </div>
 	                    </label>
 	                </div>
@@ -41,6 +41,13 @@
 
 </div>
 <!-- /#page-wrapper -->
+    <script type="text/javascript">
+        var username = {$username};
+        console.log({$photos});
+    </script>
 
+<!--         <volist name='photos' id='vo'>
+            <img src="__PH__/{$username}/{$vo.filename}" style="width:100px;height:100px">
+        </volist> -->
 
 </block>

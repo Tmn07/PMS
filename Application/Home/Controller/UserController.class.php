@@ -20,6 +20,11 @@ class UserController extends BaseController {
         $this->display('index');
     }
 
+    public function xxx()
+    {
+        $this->display('show_album');
+    }
+
     public function test()
     {
         // 检查登录
@@ -36,6 +41,39 @@ class UserController extends BaseController {
         // dump($arr);
         $this->assign('albums',$arr['album']);
         $this->display('index2');
+    }
+
+    public function test2()
+    {
+        // 检查登录
+        if (session('?user')) {
+            // dump(session('user'));
+        }
+        else{
+            $this->redirect('index/index');
+        }
+
+        $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
+
+        $this->assign('info',$arr);
+        // dump($arr);
+        $this->assign('albums',$arr['album']);
+        $aid = I('get.id');
+        $model = D('album');
+        $ret = $model->pd($aid,session('userid'));
+        if ($ret) {
+            $arr = $model->relation(true)->where(array('id'=>$aid))->find();
+            // dump($arr);
+            $this->assign('username',json_encode(session('user')));
+            $this->assign('photos', json_encode($arr['photo']));
+            // var_dump($arr['photo']);
+            // $this->display();
+        }
+        else{
+            $this->error('非该用户相册','index',2);
+        }
+
+        $this->display('index3');
     }
 
     public function show_photos()

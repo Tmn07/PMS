@@ -1,7 +1,15 @@
 <!-- show_photos -->
+<extend name="public:template" />
+
+<block name="main">
+
+
+
 <volist name="photos" id="vo">
 	<img src="__PH__/{$username}/{$vo.filename}" style="width:100px;height:100px">
 	<!-- <link rel="stylesheet" type="text/css" href="__CSS__/test.css"> -->
 	<a href="__URL__/show_photo?id={$vo.id}">{$vo.name}</a>
 	<br>
 </volist>
+
+</block>
