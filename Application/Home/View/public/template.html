@@ -26,7 +26,11 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <link rel="stylesheet" href="css/demo.css">
 
+    <link rel="stylesheet" href="css/jquery.flipster.css">
+
+    <link rel="stylesheet" href="css/flipsternavtabs.css">
 </head>
 
 <body>
@@ -133,6 +137,80 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="__PUBLIC__/lib/js/bootstrap.min.js"></script>
 
+    <script src="jquery.flipster.js"></script>
+
+
+    <script type="text/javascript">
+        $('img').click(function(){
+            alert(this.src)
+        })
+        $('.img').find('span').click(function(){
+            alert($(this).parent().parent().find('img')[0].src)
+        })
+        $(function(){ 
+            var picList = [0,1,2,3,4];
+            var pics = ['../public/img/1.jpg','../public/img/2.jpg','../public/img/3.jpg','../public/img/4.jpg','../public/img/5.jpg','../public/img/6.jpg','../public/img/7.png','../public/img/8.jpg']
+            $(".flipster").flipster({ 
+                style: 'carousel', 
+                start: 0 
+            }); 
+            var olddom,newdom = 0;
+            $('.flipster').find('li').click(function(){
+                olddom = newdom;
+                newdom = $('.flipster').find('li').index(this);
+                switch(newdom-olddom){
+                    case 0 :
+                        //console.log('点的是中间')
+                        return;
+                        break;
+                    case 1:
+                    case -4:
+                        $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = pics[(picList[4]+1)%pics.length];
+                        picList = picList.map(function(x){
+                            return ++x;
+                        });
+                        break;
+
+                    case 2:
+                    case -3:
+                        //console.log('左移2')
+                        $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5)[0].src = pics[(picList[4]+1)%pics.length];
+                        $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = pics[(picList[4]+2)%pics.length];
+                        picList = picList.map(function(x){
+                            x = x+2;
+                            return x;
+                        });
+                        break;
+                    case 3:
+                    case -2:
+                        //console.log('右移2')
+                        $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].src = pics[(picList[0]-2+pics.length*100)%pics.length];
+                        $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].src = pics[(picList[0]-1+pics.length*100)%pics.length];
+                        picList = picList.map(function(x){
+                            x = x-2;
+                            return x;
+                        });
+                        break;
+                    case 4 :
+                    case -1:
+                        //console.log('右移1')
+                        $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].src = pics[(picList[0]-1+pics.length*100)%pics.length];
+                        picList = picList.map(function(x){
+                            return --x;
+                        });
+                        break;
+                    
+                }
+                //console.log(picList)=
+                console.log($(this).find('img')[0].id.slice(3))
+                for(var i=0;i<5;i++){
+                    //console.log($(this).find('img')[0].src)
+                    //$(this).find('img')[0].src = pics[i+picList[i]];
+                }
+            })
+
+});
+    </script>
 </body>
 
 </html>
