@@ -1,5 +1,9 @@
 ## 软件工程项目
 
+### 须知
+user/test为旧版入口
+user/index为开发版入口
+
 ### 说明
 - 项目地址：http://tmn07.ren/PMS
 - 目前配置好了服务器，opencv等，具体开发即将进行

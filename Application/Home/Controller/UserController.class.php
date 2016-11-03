@@ -2,7 +2,7 @@
 namespace Home\Controller;
 use Think\Controller;
 class UserController extends BaseController {
-    public function index(){
+    public function test(){
     	// 检查登录
     	if (session('?user')) {
     		// dump(session('user'));
@@ -20,12 +20,8 @@ class UserController extends BaseController {
         $this->display('index');
     }
 
-    public function xxx()
-    {
-        $this->display('show_album');
-    }
 
-    public function test()
+    public function index()
     {
         // 检查登录
         if (session('?user')) {
@@ -40,10 +36,10 @@ class UserController extends BaseController {
         $this->assign('info',$arr);
         // dump($arr);
         $this->assign('albums',$arr['album']);
-        $this->display('index2');
+        $this->display('album');
     }
 
-    public function test2()
+    public function show_album()
     {
         // 检查登录
         if (session('?user')) {
@@ -73,7 +69,7 @@ class UserController extends BaseController {
             $this->error('非该用户相册','index',2);
         }
 
-        $this->display('index3');
+        $this->display();
     }
 
     public function show_photos()
@@ -154,6 +150,7 @@ class UserController extends BaseController {
             // var_dump($info);
             $model = M('photo');
             $data = array();
+            $data['userid'] = session('userid');
             $data['filename'] = $info['photo']['savename'];
             $data['addtime'] = date('Y-m-d');
             $data['albumid'] = I('post.aid');
