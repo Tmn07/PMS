@@ -5,3 +5,5 @@ ThinkPHP/*
 Application/Html/*
 
 Public/photo/*
+
+Application/Home/Conf/config.php

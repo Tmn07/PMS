@@ -1,6 +1,9 @@
 ## 软件工程项目
 
 ### 须知
+需要ThinkPHP核心文件放置根目录，才能运行
+sql文件在doc里
+如果没有config.php，把config.bak.php改过来
 user/test为旧版入口
 user/index为开发版入口
 
