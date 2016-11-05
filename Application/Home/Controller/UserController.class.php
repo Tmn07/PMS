@@ -20,9 +20,9 @@ class UserController extends BaseController {
         $this->display('index');
     }
 
-    public function xxx()
+    public function uploader()
     {
-        $this->display('show_album');
+        $this->display('upload');
     }
 
     public function test()
