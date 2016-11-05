@@ -75,6 +75,13 @@
                 <button type="button" id="trigger-upload" class="btn btn-primary">
                     <i class="fa fa-fw fa-upload"></i> 上传
                 </button>
+                
+                    <input type="text" name="name" />
+                    <select name='aid'>
+                        <volist name='albums' id='vo'>
+                            <option value="{$vo.id}">{$vo.name}</option>
+                        </volist>
+                    </select>
             </div>
             <span class="qq-drop-processing-selector qq-drop-processing">
                 <span>Processing dropped files...</span>
@@ -137,7 +144,10 @@
             z-index: 1700;
             left: -225px;
             width: 70%;
-            transform: translate(40%);
+            transform: translate(50%);
+            height: 400px;
+            top: 100px;
+            position: fixed;
         }
 
         #fine-uploader-manual-trigger .qq-upload-button {
@@ -164,7 +174,7 @@
     ====================================================================== -->
     <script>
         $('.gray-canvas-close').click(function(){
-                 window.location.href="__URL__/test"; 
+                 window.location.href="__URL__/index"; 
             })
 
         $('#fine-uploader-manual-trigger').fineUploader({
@@ -177,6 +187,11 @@
                     waitingPath: '__PUBLIC__/lib/fine-uploader/placeholders/waiting-generic.png',
                     notAvailablePath: '__PUBLIC__/lib/fine-uploader/placeholders/not_available-generic.png'
                 }
+            },
+            validation: {
+                allowedExtensions: ['jpeg', 'jpg', 'txt'],
+                itemLimit: 3,
+                sizeLimit: 51200 // 50 kB = 50 * 1024 bytes
             },
             autoUpload: false
         });
