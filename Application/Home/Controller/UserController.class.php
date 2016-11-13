@@ -120,6 +120,16 @@ class UserController extends BaseController {
         // dump($arr);
     }
 
+    /*public function uploader()
+    {
+        $id = I("get.id");
+        $model = D('photo');
+        $arr = $model->where(array('id'=>$id,'userid'=>session('userid')))->find();
+
+        
+        $this->display('show_photo');
+    }*/
+
     public function set_share(){
         $id = I("get.id");
         $model = D('photo');
