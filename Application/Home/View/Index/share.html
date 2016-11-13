@@ -2,21 +2,87 @@
 <html>
 <head>
 	<title>分享的照片</title>
+	<script type="text/javascript" src="__PUBLIC__/lib/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/lib/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/lib/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__CSS__/show_photo.css">
+	<link href="__PUBLIC__/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 
+<div class="show_photo_container">
+	<a href="#"><i class="fa fa-3x fa-chevron-left"></i></a>
+		<img id="photo"  src="__PH__/{$url}">
+		<!-- <img id="photo" src="__PH__/{$username}/{$photo.filename}" > -->
+	<a href="#"><i class="fa fa-3x fa-chevron-right"></i></a>
+	<div class="btn-group-vertical" id="show_photo_control_panel">
+		
+	    <button type="button" class="btn btn-default btn-lg">评论</button>
+	    <div class="btn-group-vertical">
+		    <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown">
+		        分享
+		        <span class="caret"></span>
+		    </button>
+			    <ul class="nav nav-pills dropdown-menu class="jiathis_style_32x32"">
+<!-- 			        <li>
+						<a class="jiathis_button_qzone share-logo"></a>
+			        </li> -->
+			        <li>
+						<a class="jiathis_button_cqq share-logo">
+							<img style="margin-left: -88px;margin-top: -68px" src="__PUBLIC__/img/share-logo.png">
+						</a>
+			        </li>
+			        <li>
+						<a class="jiathis_button_weixin share-logo">
+							<img style="margin-left: -123px;margin-top: -68px" src="__PUBLIC__/img/share-logo.png">
+						</a>
+					</li>
+					<li>
+						<a class="jiathis_button_tsina share-logo">
+							<img style="margin-left: -20px;margin-top: -68px" src="__PUBLIC__/img/share-logo.png">
+						</a>
+					</li>
+					<!-- <a class="jiathis_counter_style"></a> -->
+			    </ul>
 
-<img src="__PH__/{$url}" style="width:300px;height:300px">
+	    </div>
+	</div>
+</div>
+
+<div class="show_photo_comment">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				用户1的评论
+			</h3>
+		</div>
+		<div class="panel-body">
+			评论1
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				用户2的评论
+			</h3>
+		</div>
+		<div class="panel-body">
+			评论2
+		</div>
+	</div>
+	<ul class="pagination">
+	    <li><a href="#">&laquo;</a></li>
+	    <li><a href="#">1</a></li>
+	    <li><a href="#">2</a></li>
+	    <li><a href="#">3</a></li>
+	    <li><a href="#">4</a></li>
+	    <li><a href="#">5</a></li>
+	    <li><a href="#">&raquo;</a></li>
+	</ul>
+</div>
 
 <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style_32x32">
-<a class="jiathis_button_qzone"></a>
-<a class="jiathis_button_cqq"></a>
-<a class="jiathis_button_weixin"></a>
-<a class="jiathis_button_tsina"></a>
-<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-<a class="jiathis_counter_style"></a>
-</div>
 <script type="text/javascript" >
 var jiathis_config={
 	summary:"",
@@ -26,5 +92,10 @@ var jiathis_config={
 </script>
 <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
 <!-- JiaThis Button END -->
+
+
 </body>
 </html>
+
+
+

@@ -26,7 +26,8 @@
 	                    <label>
 	                        <img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg">
 	                        <div class="">  
-	                            <a href="__URL__/show_album?id={$vo.id}"><span>{$vo.name}</span></a>
+                            <!-- __URL__/show_album?id={$vo.id} -->
+	                            <a href="javascript:void(0);" num="{$vo.id}"><span>{$vo.name}</span></a>
 	                        </div>
 	                    </label>
 	                </div>
@@ -42,5 +43,150 @@
 </div>
 <!-- /#page-wrapper -->
 
+
+<div class="show_album" hidden>
+     <div class="flipster">
+        <ul>
+            <li>
+                <div class="Button Block">   
+                    <a href=""><img id="img0" src=""></a>
+                </div>
+            </li>
+            <li>
+                <div class="Button Block">
+                    <a href="javascript:void(0);"><img id="img1"  src=""></a>
+                </div>
+            </li>
+            <li>
+                <div class="Button Block">
+                    <a href="javascript:void(0);"><img id="img2"  src=""></a>
+                </div>
+            </li>
+            <li>
+                <div class="Button Block">
+                    <a href="javascript:void(0);"><img id="img3"  src=""></a>
+                </div>
+            </li>
+            <li>
+                <div class="Button Block">
+                    <a href="javascript:void(0);"><img id="img4"  src=""></a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="gray-canvas"> 
+        <i class="fa fa-fw fa-close gray-canvas-close"></i>
+    </div>
+    <!-- 灰色悬浮层 -->
+</div>
+
+
+<script type="text/javascript">
+    $(function() {
+
+        $(".album a").each(function(){
+            $(this).click(function(){
+                var aid = this.getAttribute("num");
+                // console.log($(this).attr("num"));
+                $.post("__URL__/getAlbumphotos",{
+                    "aid":aid
+                },function(data){
+                    // console.log(data);
+                    var username = data.username;
+                    var photos = data.photos;
+
+                    var photoUrl = new Array()
+                    photos.forEach(function(x){photoUrl.push('__PH__/'+username+'/'+x.filename)})
+                    console.log(photoUrl)
+                    //console.log( $('.flipster').find('img')[0].src);
+
+                    $('.flipster').find('img')[0].src = photoUrl[3];
+                    $('.flipster').find('img')[1].src = photoUrl[4];
+                    $('.flipster').find('img')[2].src = photoUrl[5];
+                    $('.flipster').find('img')[3].src = photoUrl[1];
+                    $('.flipster').find('img')[4].src = photoUrl[2];
+
+
+                    // demo...
+                    $('.flipster').find('a')[0].href = "__URL__/show_photo?id=1";
+                    $('.flipster').find('a')[1].href = "__URL__/show_photo?id=2";
+                    $('.flipster').find('a')[2].href = "__URL__/show_photo?id=3";
+                    $('.flipster').find('a')[3].href = "__URL__/show_photo?id=4";
+                    $('.flipster').find('a')[4].href = "__URL__/show_photo?id=5";
+
+
+
+                    var picList = [0,1,2,3,4];
+
+                    $(".flipster").flipster({ 
+                        style: 'carousel', 
+                        start: 0 
+                    }); 
+                    var olddom,newdom = 0;
+
+                    $('.gray-canvas-close').click(function(){
+                        $(".show_album").css({"display":"none"});
+                    })
+
+                    $('.flipster').find('li').click(function(){
+                        olddom = newdom;
+                        newdom = $('.flipster').find('li').index(this);
+                        switch(newdom-olddom){
+                            case 0 :
+                                //console.log('点的是中间')
+                                return;
+                                break;
+                            case 1:
+                            case -4:
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+1)%photoUrl.length];
+                                picList = picList.map(function(x){
+                                    return ++x;
+                                });
+                                break;
+
+                            case 2:
+                            case -3:
+                                //console.log('左移2')
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5)[0].src = photoUrl[(picList[4]+1)%photoUrl.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+2)%photoUrl.length];
+                                picList = picList.map(function(x){
+                                    x = x+2;
+                                    return x;
+                                });
+                                break;
+                            case 3:
+                            case -2:
+                                //console.log('右移2')
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].src = photoUrl[(picList[0]-2+photoUrl.length*100)%photoUrl.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
+                                picList = picList.map(function(x){
+                                    x = x-2;
+                                    return x;
+                                });
+                                break;
+                            case 4 :
+                            case -1:
+                                //console.log('右移1')
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
+                                picList = picList.map(function(x){
+                                    return --x;
+                                });
+                                break;
+                            
+                        }
+                    })
+
+                $(".show_album").css({"display":"block"});
+
+
+                })
+            })
+        })
+
+    })
+
+
+</script>
 
 </block>

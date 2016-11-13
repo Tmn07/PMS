@@ -2,6 +2,10 @@
 namespace Home\Controller;
 use Think\Controller;
 class UserController extends BaseController {
+    public function none()
+    {
+        $this->display();
+    }
     public function test(){
     	// 检查登录
     	if (session('?user')) {
@@ -18,17 +22,6 @@ class UserController extends BaseController {
         $this->assign('albums',$arr['album']);
 
         $this->display('index');
-    }
-
-    public function uploader()
-    {
-        $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
-
-        $this->assign('info',$arr);
-        // dump($arr);
-        $this->assign('albums',$arr['album']);
-        
-        $this->display('upload');
     }
 
     public function index()
@@ -49,38 +42,34 @@ class UserController extends BaseController {
         $this->display('album');
     }
 
-    public function show_album()
+    public function getAlbumphotos()
     {
-        // 检查登录
-        if (session('?user')) {
-            // dump(session('user'));
+        $aid = I("post.aid");
+        $data['username'] = session('user');
+        
+        $model = D('album');
+        $ret = $model->pd($aid,session('userid'));
+        if ($ret) {
+            $arr = $model->relation(true)->where(array('id'=>$aid))->find();
+            $data['photos'] = $arr['photo'];
         }
         else{
-            $this->redirect('index/index');
+            $this->error('非该用户相册','index',2);
         }
+        $this->ajaxReturn($data);
+    }
 
+    public function uploader()
+    {
         $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
 
         $this->assign('info',$arr);
         // dump($arr);
         $this->assign('albums',$arr['album']);
-        $aid = I('get.id');
-        $model = D('album');
-        $ret = $model->pd($aid,session('userid'));
-        if ($ret) {
-            $arr = $model->relation(true)->where(array('id'=>$aid))->find();
-            // dump($arr);
-            $this->assign('username',json_encode(session('user')));
-            $this->assign('photos', json_encode($arr['photo']));
-            // var_dump($arr['photo']);
-            // $this->display();
-        }
-        else{
-            $this->error('非该用户相册','index',2);
-        }
-
-        $this->display();
+        
+        $this->display('upload');
     }
+
 
     public function show_photos()
     {
@@ -120,27 +109,26 @@ class UserController extends BaseController {
         // dump($arr);
     }
 
-    /*public function uploader()
-    {
-        $id = I("get.id");
-        $model = D('photo');
-        $arr = $model->where(array('id'=>$id,'userid'=>session('userid')))->find();
-
-        
-        $this->display('show_photo');
-    }*/
-
     public function set_share(){
         $id = I("get.id");
         $model = D('photo');
         $arr = $model->where(array('id'=>$id,'userid'=>session('userid')))->find();
         if (isset($arr)) {
-            $arr['share'] = 1;
-            $ret = $model->save($arr);
-            $data['photoid'] = $arr['id'];
-            $data['url'] = session('user').'/'.$arr['filename'];
-            $sid = M('share')->add($data);
-            $this->success('分享成功',U("index/share?id=$sid"),2);
+            $x = M('share')->where(array("photoid"=>$id))->find();
+            // dump(isset($x));
+            if (!isset($x))
+            {
+                $arr['share'] = 1;
+                $ret = $model->save($arr);
+                $data['photoid'] = $arr['id'];
+                $data['url'] = session('user').'/'.$arr['filename'];
+                $sid = M('share')->add($data);
+                $this->success('分享成功',U("index/share?id=$sid"),2);
+            }
+            else{
+                $sid = $x['id'];
+                $this->success('分享成功',U("index/share?id=$sid"),2);
+            }
         }
         else{
             $this->error('非该用户相片','index',2);
