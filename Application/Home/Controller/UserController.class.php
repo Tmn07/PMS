@@ -17,11 +17,14 @@ class UserController extends BaseController {
 
         $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
 
+        // dump (Protoid());
+        $this->assign('prid',Protoid());
+
         $this->assign('info',$arr);
         // dump($arr);
         $this->assign('albums',$arr['album']);
 
-        $this->display('index');
+        $this->display('index-old');
     }
 
     public function index()
@@ -40,6 +43,17 @@ class UserController extends BaseController {
         // dump($arr);
         $this->assign('albums',$arr['album']);
         $this->display('album');
+    }
+
+    public function map()
+    {
+        $arr = M("photo")->where(array("userid"=>session("userid")))->select();
+        // $prinfo = Protoid();
+        // // dump($prinfo);
+        // $this->assign("prinfo",json_encode($prinfo));
+        $this->assign("photos",json_encode($arr));
+        $this->assign("username",json_encode(session("user")));
+        $this->display();
     }
 
     public function getAlbumphotos()
@@ -158,11 +172,13 @@ class UserController extends BaseController {
             // var_dump($info);
             $model = M('photo');
             $data = array();
+            $data['address'] = I('post.pro');
             $data['userid'] = session('userid');
             $data['filename'] = $info['photo']['savename'];
             $data['addtime'] = date('Y-m-d');
             $data['albumid'] = I('post.aid');
             $data['name'] = I('post.name');
+            // var_dump($data);
             $model->add($data);
             $this->success('上传成功！');
             // foreach($info as $file){

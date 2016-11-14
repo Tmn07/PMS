@@ -1,0 +1,207 @@
+<extend name="public:template" />
+
+<block name="main">    
+
+    <script src="__JS__/echarts.js"></script>
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 1000px;height:1000px;"></div>
+    
+    <script type="text/javascript">
+        
+        var all_photos = {$photos};
+
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter:function(params){
+                    var num = 0;
+                    for (var i = all_photos.length - 1; i >= 0; i--) {
+                        if (all_photos[i].address == params.name)
+                        {
+                            num += 1;
+                        }
+                    }
+                    return '<h2>' + (params.name?params.name:'南海诸岛') + "(" + num.toString() + ') </h2>'
+                }
+            },
+            series: [
+                {
+                    name: '中国',
+                    type: 'map',
+                    mapType: 'china',
+                    //selectedMode : 'multiple',
+                    label: {
+                        normal: {
+                            show: true
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    }
+                }
+            ]
+        };
+
+        function getPhoto($name)
+        {
+            var photos = new Array();
+            for (var i = all_photos.length - 1; i >= 0; i--) {
+                // all_photos[i].address
+                if (all_photos[i].address == $name)
+                {
+                    photos.push(all_photos[i]);
+                }
+            }
+            return photos;
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        $.get('__JSON__/china.json', function (chinaJson) {
+
+            echarts.registerMap('china', chinaJson);
+            var chart = echarts.init(document.getElementById('main'));
+            chart.setOption(option);
+            chart.on('click', function (params) {
+
+                // params.name;
+                var username = {$username};
+                
+                var photos =getPhoto(params.name);
+                console.log(photos);
+                // var photos = data.photos;
+                if ( photos.length == 0) {
+                    alert("该省还没有照片");
+                }
+                else{
+
+                    var photoUrl = new Array()
+                    photos.forEach(function(x){photoUrl.push('__PH__/'+username+'/'+x.filename)})
+                    // console.log(photoUrl)
+                    //console.log( $('.flipster').find('img')[0].src);
+
+                    $('.flipster').find('img')[0].src = photoUrl[3];
+                    $('.flipster').find('img')[1].src = photoUrl[4];
+                    $('.flipster').find('img')[2].src = photoUrl[5];
+                    $('.flipster').find('img')[3].src = photoUrl[1];
+                    $('.flipster').find('img')[4].src = photoUrl[2];
+
+
+                    // demo...
+                    $('.flipster').find('a')[0].href = "__URL__/show_photo?id=1";
+                    $('.flipster').find('a')[1].href = "__URL__/show_photo?id=2";
+                    $('.flipster').find('a')[2].href = "__URL__/show_photo?id=3";
+                    $('.flipster').find('a')[3].href = "__URL__/show_photo?id=4";
+                    $('.flipster').find('a')[4].href = "__URL__/show_photo?id=5";
+
+
+
+                    var picList = [0,1,2,3,4];
+
+                    $(".flipster").flipster({ 
+                        style: 'carousel', 
+                        start: 0 
+                    }); 
+                    var olddom,newdom = 0;
+
+                    $('.gray-canvas-close').click(function(){
+                        $(".show_album").css({"display":"none"});
+                    })
+                    $(".show_album").css({"display":"block"});
+                    $('.flipster').find('li').click(function(){
+                        olddom = newdom;
+                        newdom = $('.flipster').find('li').index(this);
+                        switch(newdom-olddom){
+                            case 0 :
+                                //console.log('点的是中间')
+                                return;
+                                break;
+                            case 1:
+                            case -4:
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+1)%photoUrl.length];
+                                picList = picList.map(function(x){
+                                    return ++x;
+                                });
+                                break;
+
+                            case 2:
+                            case -3:
+                                //console.log('左移2')
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5)[0].src = photoUrl[(picList[4]+1)%photoUrl.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+2)%photoUrl.length];
+                                picList = picList.map(function(x){
+                                    x = x+2;
+                                    return x;
+                                });
+                                break;
+                            case 3:
+                            case -2:
+                                //console.log('右移2')
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].src = photoUrl[(picList[0]-2+photoUrl.length*100)%photoUrl.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
+                                picList = picList.map(function(x){
+                                    x = x-2;
+                                    return x;
+                                });
+                                break;
+                            case 4 :
+                            case -1:
+                                //console.log('右移1')
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
+                                picList = picList.map(function(x){
+                                    return --x;
+                                });
+                                break;
+                            
+                        }
+                    })
+
+                }
+
+			});
+        });
+
+
+    </script>
+
+
+
+<div class="show_album" hidden>
+     <div class="flipster">
+        <ul>
+            <li>
+                <div class="Button Block">   
+                    <a href=""><img id="img0" src=""></a>
+                </div>
+            </li>
+            <li>
+                <div class="Button Block">
+                    <a href="javascript:void(0);"><img id="img1"  src=""></a>
+                </div>
+            </li>
+            <li>
+                <div class="Button Block">
+                    <a href="javascript:void(0);"><img id="img2"  src=""></a>
+                </div>
+            </li>
+            <li>
+                <div class="Button Block">
+                    <a href="javascript:void(0);"><img id="img3"  src=""></a>
+                </div>
+            </li>
+            <li>
+                <div class="Button Block">
+                    <a href="javascript:void(0);"><img id="img4"  src=""></a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="gray-canvas"> 
+        <i class="fa fa-fw fa-close gray-canvas-close"></i>
+    </div>
+    <!-- 灰色悬浮层 -->
+</div>
+
+
+</block>

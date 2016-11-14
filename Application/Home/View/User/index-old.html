@@ -1,6 +1,6 @@
 用户首页
 <a href="__URL__/logout">logout</a>
-
+<a href="__URL__/index">新版</a>
 <br><br>
 
 <div class="albums" style="width: 700px;border:1px solid black;">
@@ -32,6 +32,12 @@
 	<select name='aid'>
 		<volist name='albums' id='vo'>
 			<option value="{$vo.id}">{$vo.name}</option>
+		</volist>
+	</select>
+	<select name="pro">
+		<option value="-1">None</option>
+		<volist name='prid' id='vo'>
+			<option value="{$vo.name}">{$vo.name}</option>
 		</volist>
 	</select>
 	<input type='file'  name='photo'>
