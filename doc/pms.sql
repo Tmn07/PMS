@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10deb1
+-- version phpStudy 2014
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2016-11-02 00:08:37
--- 服务器版本: 5.5.53-0ubuntu0.14.04.1
--- PHP 版本: 5.5.9-1ubuntu4.20
+-- 生成日期: 2016 年 11 月 14 日 20:53
+-- 服务器版本: 5.5.47
+-- PHP 版本: 5.3.29
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -25,8 +25,9 @@ SET time_zone = "+00:00";
 --
 -- 表的结构 `album`
 --
--- 创建时间: 2016-10-21 07:35:53
--- 最后更新: 2016-10-21 07:35:53
+-- 创建时间: 2016 年 10 月 18 日 12:34
+-- 最后更新: 2016 年 11 月 14 日 11:22
+-- 最后检查: 2016 年 10 月 18 日 12:34
 --
 
 CREATE TABLE IF NOT EXISTS `album` (
@@ -38,32 +39,15 @@ CREATE TABLE IF NOT EXISTS `album` (
   `info` varchar(10) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
   KEY `userid` (`userid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `albumphoto`
---
--- 创建时间: 2016-10-21 07:35:53
--- 最后更新: 2016-10-21 07:35:53
---
-
-CREATE TABLE IF NOT EXISTS `albumphoto` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `albumid` int(11) NOT NULL,
-  `photoid` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `albumid` (`albumid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `comment`
 --
--- 创建时间: 2016-10-21 07:35:53
--- 最后更新: 2016-10-21 07:35:53
+-- 创建时间: 2016 年 10 月 15 日 12:22
+-- 最后更新: 2016 年 10 月 15 日 12:22
 --
 
 CREATE TABLE IF NOT EXISTS `comment` (
@@ -80,8 +64,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
 --
 -- 表的结构 `index`
 --
--- 创建时间: 2016-10-21 07:35:53
--- 最后更新: 2016-10-21 07:35:53
+-- 创建时间: 2016 年 10 月 15 日 12:15
+-- 最后更新: 2016 年 10 月 15 日 12:15
 --
 
 CREATE TABLE IF NOT EXISTS `index` (
@@ -94,49 +78,69 @@ CREATE TABLE IF NOT EXISTS `index` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `notice`
+--
+-- 创建时间: 2016 年 11 月 13 日 15:07
+-- 最后更新: 2016 年 11 月 13 日 15:07
+--
+
+CREATE TABLE IF NOT EXISTS `notice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL,
+  `type` tinyint(4) NOT NULL,
+  `description` varchar(10) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `photo`
 --
--- 创建时间: 2016-11-01 16:00:39
--- 最后更新: 2016-11-01 16:07:33
+-- 创建时间: 2016 年 11 月 14 日 12:46
+-- 最后更新: 2016 年 11 月 14 日 12:46
 --
 
 CREATE TABLE IF NOT EXISTS `photo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL,
   `albumid` int(11) NOT NULL,
-  `name` varchar(20) COLLATE utf8_bin NOT NULL,
-  `filename` varchar(20) COLLATE utf8_bin NOT NULL,
+  `name` varchar(30) COLLATE utf8_bin NOT NULL,
+  `filename` varchar(42) COLLATE utf8_bin NOT NULL,
   `description` varchar(50) COLLATE utf8_bin NOT NULL,
   `address` varchar(20) COLLATE utf8_bin NOT NULL,
   `addtime` date NOT NULL,
   `share` tinyint(1) NOT NULL,
   `info` varchar(10) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `albumid` (`albumid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
+  KEY `albumid` (`albumid`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=21 ;
 
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `share`
 --
--- 创建时间: 2016-11-01 16:00:20
--- 最后更新: 2016-11-01 16:07:33
+-- 创建时间: 2016 年 10 月 22 日 11:51
+-- 最后更新: 2016 年 11 月 13 日 16:17
 --
 
 CREATE TABLE IF NOT EXISTS `share` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `photoid` int(11) NOT NULL,
-  `url` varchar(25) COLLATE utf8_bin NOT NULL,
+  `url` varchar(30) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `user`
 --
--- 创建时间: 2016-10-21 07:35:53
--- 最后更新: 2016-10-21 07:35:53
+-- 创建时间: 2016 年 10 月 18 日 12:13
+-- 最后更新: 2016 年 10 月 22 日 12:55
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -147,32 +151,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `addtime` date NOT NULL,
   `info` varchar(10) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `useralbum`
---
--- 创建时间: 2016-10-21 07:35:53
--- 最后更新: 2016-10-21 07:35:53
---
-
-CREATE TABLE IF NOT EXISTS `useralbum` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` int(11) NOT NULL,
-  `albumid` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `userid` (`userid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `user_log`
 --
--- 创建时间: 2016-10-21 07:35:53
--- 最后更新: 2016-10-21 07:35:53
+-- 创建时间: 2016 年 10 月 15 日 12:15
+-- 最后更新: 2016 年 10 月 15 日 12:15
 --
 
 CREATE TABLE IF NOT EXISTS `user_log` (

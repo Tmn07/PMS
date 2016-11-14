@@ -179,8 +179,9 @@
 
         $('#fine-uploader-manual-trigger').fineUploader({
             template: 'qq-template-manual-trigger',
+            // debug: true,
             request: {
-                endpoint: '/server/uploads'
+                endpoint: '__URL__/up'
             },
             thumbnails: {
                 placeholders: {
@@ -189,9 +190,9 @@
                 }
             },
             validation: {
-                allowedExtensions: ['jpeg', 'jpg', 'txt'],
-                itemLimit: 3,
-                sizeLimit: 51200 // 50 kB = 50 * 1024 bytes
+                allowedExtensions: ['jpeg', 'jpg', 'png'],
+                itemLimit: 5,
+                sizeLimit: 512000, // 50 kB = 50 * 1024 bytes
             },
             autoUpload: false
         });

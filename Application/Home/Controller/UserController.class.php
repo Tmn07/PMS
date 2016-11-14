@@ -84,6 +84,69 @@ class UserController extends BaseController {
         $this->display('upload');
     }
 
+    public function up()
+    {
+
+        $arr = I("post.");
+        // dump($arr);
+        $uploader = new \Org\Util\UploadHandler();
+
+        // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
+        $uploader->allowedExtensions = array("jpeg","jpg","png"); // all files types allowed by default
+
+        // Specify max file size in bytes.
+        $uploader->sizeLimit = 512000;
+
+        // Specify the input name set in the javascript.
+        $uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
+
+        // If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
+        $uploader->chunksFolder = "./public/photo/".session("user");
+
+        $method = $_SERVER["REQUEST_METHOD"];
+        if ($method == "POST") {
+            header("Content-Type: text/plain");
+
+            // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
+            // For example: /myserver/handlers/endpoint.php?done
+            if (isset($_GET["done"])) {
+                $result = $uploader->combineChunks("files");
+            }
+            // Handles upload requests
+            else {
+                // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
+                $result = $uploader->handleUpload("./public/photo/".session("user"));
+
+                // To return a name used for uploaded file you can use the following line.
+                $result["uploadName"] = $uploader->getUploadName();
+            }
+            echo json_encode($result);
+            if ($result['success']==true) {
+                // 插入数据库
+                $model = M('photo');
+                $data = array();
+                $data['address'] = '黑龙江';
+                $data['userid'] = session('userid');
+                $data['filename'] = $result['uploadName'];
+                $data['addtime'] = date('Y-m-d');
+                $data['albumid'] = '1';
+                $data['name'] = $uploader->getName();
+                // var_dump($data);
+                $model->add($data);
+                // $this->success('上传成功！');
+            }
+        }
+        // for delete file requests
+        else if ($method == "DELETE") {
+            $result = $uploader->handleDelete("files");
+            echo json_encode($result);
+        }
+        else {
+            header("HTTP/1.0 405 Method Not Allowed");
+        }
+
+    }
+
 
     public function show_photos()
     {
@@ -154,7 +217,7 @@ class UserController extends BaseController {
         $data['addtime'] = date('Y-m-d');
         $data['userid'] = session('userid');
         // dump($data);
-        M('album')->add($data);
+        return M('album')->add($data);
     }
 
     public function upload(){

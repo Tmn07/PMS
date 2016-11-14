@@ -32,7 +32,15 @@
 	                    </label>
 	                </div>
 		</volist>
-
+                    <div class="img">
+                        <label>
+                            <i class="fa fa-plus-square-o" aria-hidden="true" style="margin-left: 20px;font-size:200px"></i>
+                            <div class="">  
+                            <!-- __URL__/show_album?id={$vo.id} -->
+                                <a href="javascript:void(0);" onclick="add_ablum()"><span>新建</span></a>
+                            </div>
+                        </label>
+                    </div>
             </div>
         </div>
         <!-- /.row -->
@@ -187,6 +195,41 @@
     })
 
 
+</script>
+
+<script type="text/javascript">
+
+function Trim(str) {
+     for (var i=0; (str.charAt(i)==' ') && i<str.length; i++);
+     if (i == str.length) return ''; //whole string is space
+     var newstr = str.substr(i);
+     for (var i=newstr.length-1; newstr.charAt(i)==' ' && i>=0; i--);
+     newstr = newstr.substr(0,i+1);
+     return newstr;
+} 
+
+
+    function add_ablum()
+    {
+        var name=prompt("输入相册名","");
+        
+        if(Trim(name) == "")
+        {
+            alert("不能为空");
+        }
+        else
+        {
+            $.post("__URL__/add_album",{
+                "name":name,
+            },function(data){
+                if (data!=null) {
+                    alert("新建成功");
+                    location.reload();
+                }
+            })
+        }
+
+    }
 </script>
 
 </block>
