@@ -192,7 +192,6 @@ body {
 }
 .Button {
   display: inline-block;
-  padding: 20px;
   margin: 0;
   background-color: #da0d25;
   background-position: center center;
@@ -201,7 +200,6 @@ body {
   text-shadow: none;
   vertical-align: middle;
   cursor: pointer;
-  border: 0;
   -ms-transition: color 300ms ease, background-color 300ms ease;
   -webkit-transition: color 300ms ease, background-color 300ms ease;
   -moz-transition: color 300ms ease, background-color 300ms ease;
@@ -218,9 +216,12 @@ body {
   font-size: small;
 }
 .Button.Block {
-  padding: 20px 40px;
   width: 500px;
   overflow: hidden;
+  border-top: 20px solid red;
+  border-bottom: 20px solid red;    
+  border-left: 40px solid red;
+  border-right: 40px solid red;
 }
 .Button h1 {
   font-size: 2em;

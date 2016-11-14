@@ -5,7 +5,7 @@
     <script src="__JS__/echarts.js"></script>
 
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="width: 1000px;height:1000px;"></div>
+    <div id="main" style="width: 100%;height:850px;"></div>
     
     <script type="text/javascript">
         
@@ -22,7 +22,7 @@
                             num += 1;
                         }
                     }
-                    return '<h2>' + (params.name?params.name:'南海诸岛') + "(" + num.toString() + ') </h2>'
+                    return '<h5>' + (params.name?params.name:'南海诸岛') + "(" + num.toString() + ') </h5>'
                 }
             },
             series: [
