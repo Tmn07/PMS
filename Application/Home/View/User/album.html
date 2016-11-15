@@ -109,6 +109,11 @@
                     console.log(photoUrl)
                     //console.log( $('.flipster').find('img')[0].src);
 
+                    while(photoUrl.length<=5){
+                        photoUrl.push('__IMG__/no-Pic.png');
+                    }
+
+
                     $('.flipster').find('img')[0].src = photoUrl[3];
                     $('.flipster').find('img')[1].src = photoUrl[4];
                     $('.flipster').find('img')[2].src = photoUrl[5];
