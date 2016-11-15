@@ -21,7 +21,7 @@ def run():
 	parser.add_argument('file', help="输入图片文件名") 
 	parser.add_argument('-i', metavar='N', type=int, nargs='+',
 	                    help='输入三个参数,滤波领域直径,空间高斯函数标准差,灰度值相似性标准差')
-
+	# 11 51 51
 	args = parser.parse_args()
 	main(args.file,args.i)
 
