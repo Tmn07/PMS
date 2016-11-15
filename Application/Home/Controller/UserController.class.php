@@ -101,7 +101,7 @@ class UserController extends BaseController {
         $uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
 
         // If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
-        $uploader->chunksFolder = "./public/photo/".session("user");
+        $uploader->chunksFolder = "./Public/photo/".session("user");
 
         $method = $_SERVER["REQUEST_METHOD"];
         if ($method == "POST") {
@@ -115,7 +115,7 @@ class UserController extends BaseController {
             // Handles upload requests
             else {
                 // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
-                $result = $uploader->handleUpload("./public/photo/".session("user"));
+                $result = $uploader->handleUpload("./Public/photo/".session("user"));
 
                 // To return a name used for uploaded file you can use the following line.
                 $result["uploadName"] = $uploader->getUploadName();

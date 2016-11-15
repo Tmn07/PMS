@@ -61,6 +61,7 @@ class UserModel extends RelationModel{
             $id = $this->add();
             session('userid',$id);
             D('Album')->init_add($id);
+            mkdir("./Public/photo/".$data['username'],0777);
             return 1;
         }
     }

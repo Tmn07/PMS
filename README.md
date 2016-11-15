@@ -1,11 +1,11 @@
 ## 软件工程项目
 
 ### 须知
-需要ThinkPHP核心文件放置根目录，才能运行
-sql文件在doc里
-如果没有config.php，把config.bak.php改过来
-user/test为旧版入口
-user/index为开发版入口
+1. 需要ThinkPHP核心文件放置根目录，才能运行。前往下载：http://www.thinkphp.cn/down.html
+2. sql文件，[文件上传类库](./doc/UploadHandler.class.php)在doc中。类库需放置ThinkPHP\Library\Org\Util才能正确加载
+3. \Application\Home\Conf目录下把config.bak.php，依照服务器配置改好。重命名config.php
+4. 确保\Public\photo目录存在且可写
+5. user/test为旧版入口，user/index为新版入口
 
 ### 说明
 - 项目地址：http://tmn07.ren/PMS
