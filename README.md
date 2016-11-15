@@ -1,10 +1,23 @@
 ## 软件工程项目
 
+### 须知
+1. 需要ThinkPHP核心文件放置根目录，才能运行。前往下载：http://www.thinkphp.cn/down.html
+2. sql文件，[文件上传类库](./doc/UploadHandler.class.php)在doc中。类库需放置ThinkPHP\Library\Org\Util才能正确加载
+3. \Application\Home\Conf目录下把config.bak.php，依照服务器配置改好。重命名config.php
+4. 确保\Public\photo目录存在且可写
+5. user/test为旧版入口，user/index为新版入口
+
 ### 说明
 - 项目地址：http://tmn07.ren/PMS
 - 目前配置好了服务器，opencv等，具体开发即将进行
 - doc里将放置各种文档和文档链接的资源。
 - 其他将来在说明~
+
+### 提示
+- 莫名错误，可以找找error_log看看，比如之前php调用python，死活不行[解决方案]()
+- git 在不同操作系统下，换行符的问题。[解决方案](./doc/git-crlf.md)
+- 目录的权限问题！！感觉部署时候会坑...比如说没有把photo文件夹上传
+- 还有外部js,css，不应该传上来吧?
 
 *****
 以下是开题报告

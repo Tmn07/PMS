@@ -9,6 +9,18 @@ class UserModel extends RelationModel{
     array('password','require','缺少密码'),
     );
 
+    protected $_link = array(
+                'album' => array(
+                    'mapping_type'  => self::HAS_MANY,
+                    'class_name'    => 'album',
+                    'foreign_key'   => 'userid',
+                ),
+                'useralbum' => array(
+                    'mapping_type'  => self::HAS_MANY,
+                    'class_name'    => 'useralbum',
+                    'foreign_key'   => 'userid',
+                ),
+            );
 
     public function login($data='')
     {
@@ -21,7 +33,12 @@ class UserModel extends RelationModel{
         if (isset($result1) || isset($result2)) {
             if (isset($result2)) {
                 $data['username'] = $result2['username'];
+                $data['id'] = $result2['id'];
             }
+            else{
+                $data['id'] = $result1['id'];
+            }
+            session('userid',$data['id']);
             session('user',$data['username']);
             return 1;
         }
@@ -41,7 +58,10 @@ class UserModel extends RelationModel{
         }
         else{
             session('user',$data['username']);
-            $this->add();
+            $id = $this->add();
+            session('userid',$id);
+            D('Album')->init_add($id);
+            mkdir("./Public/photo/".$data['username'],0777);
             return 1;
         }
     }
