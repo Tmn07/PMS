@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>美化算法界面test</title>
+</head>
+<script src="__PUBLIC__/lib/js/jquery.min.js"></script>
+<script type="text/javascript">
+	function on() {
+		// alert($("form").serialize())
+		var data = $("form").serialize()
+		$.get("__URL__/api?"+data,function(){
+			location.reload();
+		});
+	}
+</script>
+
+<body>
+<form>
+	
+	
+	滤波领域直径：<input type="text" name="n1" value="11">
+	<br>
+	空间高斯函数标准差：<input type="text" name="n2" value="51">
+	<br>
+	灰度值相似性标准差：<input type="text" name="n3" value="51">
+	<br>
+	<input type="button" value="美化" onclick="on()">
+
+</form>
+<br>
+<img style="height: 330px;width: 330px" src="__ROOT__/py/t.png">
+=====>
+<img style="height: 330px;width: 330px" src="__ROOT__/py/new.jpg">
+
+</body>
+</html>
