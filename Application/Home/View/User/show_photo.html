@@ -11,7 +11,7 @@
 	<a href="#"><i class="fa fa-3x fa-chevron-right"></i></a>
 	<div class="btn-group-vertical" id="show_photo_control_panel">
 		
-	    <button type="button" class="btn btn-default btn-lg">评论</button>
+	    <button id="comment" type="button" class="btn btn-default btn-lg"><a href="#edit-comment">评论</a> </button>
 	    <button type="button" class="btn btn-default btn-lg">删除</button>
 	    <button type="button" class="btn btn-default btn-lg"><a href="__PH__/{$username}/{$photo.filename}" download="photo">下载</a></button>
 	    <button type="button" class="btn btn-default btn-lg"><a href="__URL__/set_share?id={$photo.id}">分享</a></button>
@@ -19,8 +19,8 @@
 	</div>
 </div>
 
-<div class="show_photo_comment">
-	<div class="panel panel-default">
+<div id="comment-container" class="show_photo_comment">
+	<!-- <div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				用户1的评论
@@ -29,27 +29,43 @@
 		<div class="panel-body">
 			评论1
 		</div>
-	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">
-				用户2的评论
-			</h3>
-		</div>
-		<div class="panel-body">
-			评论2
-		</div>
-	</div>
-	<ul class="pagination">
-	    <li><a href="#">&laquo;</a></li>
-	    <li><a href="#">1</a></li>
-	    <li><a href="#">2</a></li>
-	    <li><a href="#">3</a></li>
-	    <li><a href="#">4</a></li>
-	    <li><a href="#">5</a></li>
-	    <li><a href="#">&raquo;</a></li>
-	</ul>
+	</div> -->
 </div>
+
+<div id="edit-comment">
+	<textarea id="comment-text" style="width: 100%;height: 100px;border-radius: 4px" placeholder="我有话说..."></textarea>
+	<input type="button" class="btn btn-default" name="" id="submite-comment" value="发表" />
+</div>
+
+<script type="text/javascript">
+	var pid = {$photo.id};
+	var user = "{$username}";
+	$.get('__APP__/Api/getComment/',{"pid":pid },function(res){
+		for (var i = 0; i <res.length; i++) {
+			var name = res[i].guestname;
+			var text = res[i].content;
+			var time = res[i].addtime;
+			$('#comment-container').append('<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"> '+name+' </h3> </div> <div class="panel-body">'+text+'</div> </div>')
+		}
+	})
+	$('#submite-comment').click(function(){
+		var text = $('#comment-text').val();
+		
+		
+		$.get('__APP__/Api/setComment',{"pid":pid,"name":user,"content":text},function(res){
+			console.log(res);
+			location.reload()
+		})
+
+		// photoid' => $arr['pid'],{$photo.id}
+		// 			'guestname' => $arr['name'],
+		// 			'addtime'  => date('Y-m-d H:i:s'),
+		// 			'content' => $arr['content'],
+	})
+
+</script>
+
+
 
 </block>
 

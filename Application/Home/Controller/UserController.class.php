@@ -84,11 +84,20 @@ class UserController extends BaseController {
         $this->display('upload');
     }
 
+    public function updir()
+    {
+        dump (I("post."));
+        $arr = I("post.");
+        session("abum",$arr['dir']);
+        
+    }
+
     public function up()
     {
 
         $arr = I("post.");
-        // dump($arr);
+        //dump($arr);
+        
         $uploader = new \Org\Util\UploadHandler();
 
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")

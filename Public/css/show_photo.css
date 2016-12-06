@@ -39,4 +39,11 @@ body{
 		width: 60%;
 		margin-top: 50px;
 	}
+	#edit-comment{
+		margin-left: 20%;
+		width: 60%;
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	
 }
