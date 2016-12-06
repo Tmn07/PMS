@@ -14,8 +14,9 @@ class IndexController extends BaseController {
     public function share(){
         $sid = I('get.id');
         $arr = M('share')->find($sid);
-        // dump($arr);
+        //dump($arr);
         $this->assign('url',$arr['url']);
+        $this->assign('id',$arr['photoid']);
         $this->display();
 
     	// $this->show("您的好友username给您分享的照片");

@@ -12,15 +12,17 @@ class ApiController extends BaseController {
 					);
 		$re = M('comment')->add($data);
 		if (is_numeric($re)) {
-			// dump($re);
-			return $re;
+			// return $re;
+			$this->ajaxReturn($re);
 		}
 		else{
+			$this->ajaxReturn(array('code' => "200"));
 			return false;
 		}
 	}
-	public function getComment($pid)
+	public function getComment()
 	{
+		$pid = I("get.")['pid'];
 		$arr = M("comment")->where(array('photoid'=>$pid))->order('addtime desc')->select();
 		$this->ajaxReturn($arr);
 	}

@@ -79,16 +79,28 @@ class UserController extends BaseController {
 
         $this->assign('info',$arr);
         // dump($arr);
+        $this->assign('prid',Protoid());
+
         $this->assign('albums',$arr['album']);
         
         $this->display('upload');
+    }
+
+    public function updir()
+    {
+        dump (I("post."));
+        $arr = I("post.");
+        session("aid",$arr['album']);
+        session("address",$arr['loc']);
+        session("desc",$arr['des']);
     }
 
     public function up()
     {
 
         $arr = I("post.");
-        // dump($arr);
+        //dump($arr);
+        
         $uploader = new \Org\Util\UploadHandler();
 
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
@@ -125,15 +137,14 @@ class UserController extends BaseController {
                 // 插入数据库
                 $model = M('photo');
                 $data = array();
-                $data['address'] = '黑龙江';
+                $data['address'] = session("address");
                 $data['userid'] = session('userid');
                 $data['filename'] = $result['uploadName'];
                 $data['addtime'] = date('Y-m-d');
-                $data['albumid'] = '1';
+                $data['albumid'] = session("aid");
                 $data['name'] = $uploader->getName();
-                // var_dump($data);
+                $data['description'] = session("desc");
                 $model->add($data);
-                // $this->success('上传成功！');
             }
         }
         // for delete file requests
