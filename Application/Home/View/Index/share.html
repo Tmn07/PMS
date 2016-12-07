@@ -84,7 +84,8 @@ var jiathis_config={
 
 <script type="text/javascript">
 	var pid = {$id};
-	$.get('__APP__/Api/getComment/',{"pid":pid },function(res){
+	var sid = {$sid};
+	$.get('__APP__/Api/getComment/',{"pid":pid,"sid":sid },function(res){
 		for (var i = 0; i <res.length; i++) {
 			var name = res[i].guestname;
 			var text = res[i].content;

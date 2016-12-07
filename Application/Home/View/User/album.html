@@ -100,19 +100,23 @@
                 $.post("__URL__/getAlbumphotos",{
                     "aid":aid
                 },function(data){
-                    // console.log(data);
+                    console.log(data);
                     var username = data.username;
                     var photos = data.photos;
 
                     var photoUrl = new Array()
                     photos.forEach(function(x){photoUrl.push('__PH__/'+username+'/'+x.filename)})
-                    console.log(photoUrl)
+
+                    var photoHref = new Array()
+                    photos.forEach(function(x){photoHref.push('__URL__/show_photo?id='+x.id)})
+                    console.log(photoHref)
                     //console.log( $('.flipster').find('img')[0].src);
 
                     while(photoUrl.length<5){
                         photoUrl.push('__IMG__/no-Pic.png');
+                        photoHref.push('javascript:void(0);');
                     }
-                    console.log(photoUrl)
+                    // console.log(photoUrl)
 
                     $('.flipster').find('img')[0].src = photoUrl[2];
                     $('.flipster').find('img')[1].src = photoUrl[3];
@@ -122,11 +126,18 @@
 
                     console.log(photoUrl);
                     // demo...
-                    $('.flipster').find('a')[0].href = "__URL__/show_photo?id=1";
-                    $('.flipster').find('a')[1].href = "__URL__/show_photo?id=2";
-                    $('.flipster').find('a')[2].href = "__URL__/show_photo?id=3";
-                    $('.flipster').find('a')[3].href = "__URL__/show_photo?id=4";
-                    $('.flipster').find('a')[4].href = "__URL__/show_photo?id=5";
+                    $('.flipster').find('a')[0].href = photoHref[2];
+                    $('.flipster').find('a')[1].href = photoHref[3];
+                    $('.flipster').find('a')[2].href = photoHref[4];
+                    $('.flipster').find('a')[3].href = photoHref[0];
+                    $('.flipster').find('a')[4].href = photoHref[1];
+
+
+                    // $('.flipster').find('a')[0].href = "__URL__/show_photo?id=1";
+                    // $('.flipster').find('a')[1].href = "__URL__/show_photo?id=2";
+                    // $('.flipster').find('a')[2].href = "__URL__/show_photo?id=3";
+                    // $('.flipster').find('a')[3].href = "__URL__/show_photo?id=4";
+                    // $('.flipster').find('a')[4].href = "__URL__/show_photo?id=5";
 
 
 

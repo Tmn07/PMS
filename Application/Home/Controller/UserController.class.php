@@ -27,6 +27,12 @@ class UserController extends BaseController {
         $this->display('index-old');
     }
 
+    public function getNotice()
+    {
+        $n = D("Notice")->gets();
+        $this->ajaxReturn($n);
+    }
+
     public function index()
     {
         // 检查登录
@@ -39,8 +45,6 @@ class UserController extends BaseController {
 
         $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
 
-        $this->assign('info',$arr);
-        // dump($arr);
         $this->assign('albums',$arr['album']);
         $this->display('album');
     }
@@ -48,9 +52,6 @@ class UserController extends BaseController {
     public function map()
     {
         $arr = M("photo")->where(array("userid"=>session("userid")))->select();
-        // $prinfo = Protoid();
-        // // dump($prinfo);
-        // $this->assign("prinfo",json_encode($prinfo));
         $this->assign("photos",json_encode($arr));
         $this->assign("username",json_encode(session("user")));
         $this->display();
@@ -75,14 +76,10 @@ class UserController extends BaseController {
 
     public function uploader()
     {
-        $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
-
-        $this->assign('info',$arr);
-        // dump($arr);
+        // $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
+        // $this->assign('albums',$arr['album']);
         $this->assign('prid',Protoid());
 
-        $this->assign('albums',$arr['album']);
-        
         $this->display('upload');
     }
 

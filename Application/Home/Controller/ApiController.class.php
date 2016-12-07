@@ -11,6 +11,9 @@ class ApiController extends BaseController {
 					'content' => $arr['content'],
 					);
 		$re = M('comment')->add($data);
+
+		D("Notice")->commentNotice($arr['pid'],$arr['sid']);
+
 		if (is_numeric($re)) {
 			// return $re;
 			$this->ajaxReturn($re);
@@ -20,6 +23,7 @@ class ApiController extends BaseController {
 			return false;
 		}
 	}
+
 	public function getComment()
 	{
 		$pid = I("get.")['pid'];

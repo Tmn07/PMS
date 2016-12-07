@@ -5,8 +5,8 @@ class IndexController extends BaseController {
     public function index(){
     	// $this->show("首页,登录注册入口,介绍产品,展示部分照片");
     	if (session('?user')) {
-    		dump(session('user'));
-    		dump(U('user/index'));
+    		// dump(session('user'));
+    		// dump(U('user/index'));
     		$this->redirect('user/index');
     	}
     	$this->display();
@@ -17,6 +17,7 @@ class IndexController extends BaseController {
         //dump($arr);
         $this->assign('url',$arr['url']);
         $this->assign('id',$arr['photoid']);
+        $this->assign('sid',$sid);
         $this->display();
 
     	// $this->show("您的好友username给您分享的照片");

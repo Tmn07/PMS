@@ -58,33 +58,21 @@
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
+                    <ul id="notice-menu" class="dropdown-menu alert-dropdown">
                         <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                            <a href="__APP__/Index/share/id/2">Alert Name <span class="label label-info">1</span></a>
                         </li>
                         <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                            <a href="#">Alert Name <span class="label label-warning">1</span></a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#">View All</a>
+                            <a href="#">全部标记为已读</a>
                         </li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {$info.username} <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {$Think.session.user} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#"><i class="fa fa-fw fa-question-circle"></i> 帮助</a>
@@ -144,12 +132,22 @@
 
 
     <script type="text/javascript">
-        /*$('img').click(function(){
-            alert(this.src)
-        })
-        $('.img').find('span').click(function(){
-            alert($(this).parent().parent().find('img')[0].src)
-        })*/
+    $.get("__APP__/User/getNotice",function(data){
+        console.log(data);
+        if (data.length!=0) {
+            // <li>
+            //     <a href="#">Alert Name <span class="label label-warning">1</span></a>
+            // </li>
+            for (var i = data.length - 1; i >= 0; i--) {
+                // data[i]
+                console.log( data[i].href);
+
+                // TODO:添加元素
+                // $("#notice-menu").preppend("<li>公告<span class='label label-warning'>1</span> </li>")；
+            }
+        }
+    })
+
         
     </script>
 </body>
