@@ -142,7 +142,7 @@
 
 
                     var picList = [0,1,2,3,4];
-
+                    console.log(picList)
                     $(".flipster").flipster({ 
                         style: 'carousel', 
                         start: 0 
@@ -164,6 +164,9 @@
                             case 1:
                             case -4:
                                 $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+1)%photoUrl.length];
+                                
+                                /*console.log(photoUrl[(picList[4]+1)%photoUrl.length])
+                                console.log(  (parseInt($(this).find('img')[0].id.slice(3))+2)%5)*/
                                 picList = picList.map(function(x){
                                     return ++x;
                                 });
@@ -192,13 +195,18 @@
                             case 4 :
                             case -1:
                                 //console.log('右移1')
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
+                                /*console.log(parseInt($(this).find('img')[0].id.slice(3)))
+                                console.log(photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length]);
+                                console.log((parseInt($(this).find('img')[0].id.slice(3))+4)%5);*/
+
                                 picList = picList.map(function(x){
                                     return --x;
                                 });
                                 break;
                             
                         }
+                        //console.log(picList)
                     })
 
                 $(".show_album").css({"display":"block"});

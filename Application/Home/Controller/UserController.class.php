@@ -76,8 +76,8 @@ class UserController extends BaseController {
 
     public function uploader()
     {
-        // $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
-        // $this->assign('albums',$arr['album']);
+        $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
+        $this->assign('albums',$arr['album']);
         $this->assign('prid',Protoid());
 
         $this->display('upload');
