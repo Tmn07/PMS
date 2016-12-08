@@ -27,12 +27,6 @@ class UserController extends BaseController {
         $this->display('index-old');
     }
 
-    public function getNotice()
-    {
-        $n = D("Notice")->gets();
-        $this->ajaxReturn($n);
-    }
-
     public function index()
     {
         // 检查登录
@@ -181,10 +175,14 @@ class UserController extends BaseController {
         if (isset($arr)) {
             $this->assign('username',session('user'));
             $this->assign('photo',$arr);
+            // dump($arr);
             if ($arr['share']) {
                 # code...
                 $share_arr = M('share')->where(array('photoid'=>$arr['id']))->find();
                 $this->assign('sid',$share_arr['id']);
+            }
+            else{
+                $this->assign('sid',0);
             }
             $this->display();
         }
@@ -194,37 +192,12 @@ class UserController extends BaseController {
         // dump($arr);
     }
 
-    public function set_share(){
-        $id = I("get.id");
-        $model = D('photo');
-        $arr = $model->where(array('id'=>$id,'userid'=>session('userid')))->find();
-        if (isset($arr)) {
-            $x = M('share')->where(array("photoid"=>$id))->find();
-            // dump(isset($x));
-            if (!isset($x))
-            {
-                $arr['share'] = 1;
-                $ret = $model->save($arr);
-                $data['photoid'] = $arr['id'];
-                $data['url'] = session('user').'/'.$arr['filename'];
-                $sid = M('share')->add($data);
-                $this->success('分享成功',U("index/share?id=$sid"),2);
-            }
-            else{
-                $sid = $x['id'];
-                $this->success('分享成功',U("index/share?id=$sid"),2);
-            }
-        }
-        else{
-            $this->error('非该用户相片','index',2);
-        }
-    }
+
 
     public function add_album(){
         $data = I('post.');
         $data['addtime'] = date('Y-m-d');
         $data['userid'] = session('userid');
-        // dump($data);
         return M('album')->add($data);
     }
 
