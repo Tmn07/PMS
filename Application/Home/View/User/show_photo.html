@@ -12,24 +12,22 @@
 	<div class="btn-group-vertical" id="show_photo_control_panel">
 		
 	    <button id="comment" type="button" class="btn btn-default btn-lg"><a href="#edit-comment">评论</a> </button>
-	    <button type="button" class="btn btn-default btn-lg">删除</button>
+	    <button type="button" class="btn btn-default btn-lg"><a href="__APP__/Api/del_pic?id={$photo.id}">删除</a></button>
 	    <button type="button" class="btn btn-default btn-lg"><a href="__PH__/{$username}/{$photo.filename}" download="photo">下载</a></button>
-	    <button type="button" class="btn btn-default btn-lg"><a href="__URL__/set_share?id={$photo.id}">分享</a></button>
+	    <if condition="$sid eq 0 ">
+	    <button type="button" class="btn btn-default btn-lg"><a href="__APP__/Api/set_share?id={$photo.id}">分享</a></button>
+		<else />
+		<button type="button" class="btn btn-default btn-lg"><a href="__APP__/Index/share/id/{$sid}">前往</a></button>
+		<button type="button" class="btn btn-default btn-lg"><a href="__APP__/Api/set_noshare?id={$photo.id}">取消分享</a></button>
+		</if>
+	    <!-- {$sid} -->
+	    
 	    
 	</div>
 </div>
 
 <div id="comment-container" class="show_photo_comment">
-	<!-- <div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">
-				用户1的评论
-			</h3>
-		</div>
-		<div class="panel-body">
-			评论1
-		</div>
-	</div> -->
+
 </div>
 
 <div id="edit-comment">

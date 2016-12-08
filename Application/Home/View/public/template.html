@@ -71,7 +71,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {$Think.session.user} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-question-circle"></i> 帮助</a>
+                            <a href="__URL__/help"><i class="fa fa-fw fa-question-circle"></i> 帮助</a>
                         </li>
                        
                         <li>
@@ -100,7 +100,7 @@
                         <a class="white"  href="#"><i class="fa fa-fw fa-file"></i> 归档</a>
                     </li>
                     <li>
-                        <a class="white"  href="#"><i class="fa fa-fw fa-share-alt"></i> 分享</a>
+                        <a class="white"  href="__URL__/show_shares"><i class="fa fa-fw fa-share-alt"></i> 分享</a>
                     </li>
                     <li>
                         <a class="white"  href="__URL__/test"><i class="fa fa-fw fa-connectdevelop"></i> 旧版</a>
@@ -128,8 +128,8 @@
 
 
     <script type="text/javascript">
-    //setTimeout(function(){
-        $.get("__APP__/User/getNotice",function(data){
+
+        $.get("__APP__/Api/getNotice",function(data){
             console.log(data);
             if (data.length!=0) {
                 // <li>
@@ -188,10 +188,10 @@
 
             else{
                 $('.message-num').css("display","hidden");
+
             }
             
         })
-    //},2000)
     
 
         

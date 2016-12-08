@@ -85,7 +85,8 @@ var jiathis_config={
 <script type="text/javascript">
 	var pid = {$id};
 	var sid = {$sid};
-	$.get('__APP__/Api/getComment/',{"pid":pid },function(res){
+
+	$.get('__APP__/Api/getComment/',{"pid":pid},function(res){
 		for (var i = 0; i <res.length; i++) {
 			var name = res[i].guestname;
 			var text = res[i].content;
@@ -96,7 +97,9 @@ var jiathis_config={
 	$('#submite-comment').click(function(){
 		var text = $('#comment-text').val();
 		var user = $('#user-name').val();
-		$.get('__APP__/Api/setComment',{"pid":pid,"name":user,"content":text,"sid":sid},function(res){
+
+		$.get('__APP__/Api/setComment',{"pid":pid,"name":user,"content":text,"sid":sid },function(res){
+
 			console.log(res);
 			location.reload()
 		})

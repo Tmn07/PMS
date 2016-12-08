@@ -52,4 +52,71 @@ class ApiController extends BaseController {
 		// $this->ajaxReturn($arr);
 	}
 
+    public function getNotice()
+    {
+        $n = D("Notice")->gets();
+        $this->ajaxReturn($n);
+    }
+    public function setNoticereadAll()
+    {
+    	M("Notice")->where(array("userid"=>session("userid"),"readed"=>"0"))->setField('readed','1');
+    }
+
+    public function setNoticeread()
+    {
+    	M("Notice")->where(array("id"=>I("get.sid"),"userid"=>session("userid"),"readed"=>"0"))->setField('readed','1');
+    	return 0;
+    }
+
+    public function set_share(){
+        $id = I("get.id");
+        $model = D('photo');
+        $arr = $model->where(array('id'=>$id,'userid'=>session('userid')))->find();
+        if (isset($arr)) {
+            $x = M('share')->where(array("photoid"=>$id))->find();
+            if (!isset($x))
+            {
+                $arr['share'] = 1;
+                $ret = $model->save($arr);
+                $data['photoid'] = $arr['id'];
+                $data['url'] = session('user').'/'.$arr['filename'];
+                $sid = M('share')->add($data);
+                $this->success('分享成功',U("index/share?id=$sid"),2);
+            }
+            else{
+                $sid = $x['id'];
+                $this->success('分享成功',U("index/share?id=$sid"),2);
+            }
+        }
+        else{
+            $this->error('非该用户相片','index',2);
+        }
+    }
+
+    public function set_noshare(){
+        $id = I("get.id");
+        M('photo')->where(array('id'=>$id,'userid'=>session('userid')))->setField("share","0");
+        M('share')->where(array('photoid'=>$id))->delete();
+        $this->success('已取消分享',U("user/show_photo?id=$id"),2);
+    }
+
+    public function del_pic(){
+    	$id = I("get.id");
+    	$arr = M('photo')->where(array('id'=>$id,'userid'=>session('userid')))->find();
+    	// dump($arr);
+    	if ($arr['share']) {
+    		M('share')->where(array('photoid'=>$id))->delete();
+    	}
+    	M('photo')->where(array('id'=>$id))->delete();
+    	// TODO：跳转的地方?
+    	$this->success('删除成功',2);
+    }
+
+    // 从某相册随机取一张照片
+    public function rand_pic($aid)
+    {
+        // order by rand() limit 1 
+        $arr = M("photo")->where(array("albumid"=>$aid,"userid"=>session("userid")))->order("rand()")->find();
+        $this->ajaxReturn($arr['filename']);
+    }
 }
