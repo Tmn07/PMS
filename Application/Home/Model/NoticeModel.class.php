@@ -12,7 +12,7 @@ class NoticeModel extends RelationModel{
 	{
 		$uid = D("photo")->field("userid")->where(array("id"=>$pid))->find();
 
-		$data = array("userid"=>$uid["userid"],"type"=>"info","description"=>"新评论","href"=>"__APP__/Index/share/id/".$sid);
+		$data = array("userid"=>$uid["userid"],"type"=>"info","description"=>"新评论","href"=>"__APP__/Index/share/id/$sid");
 		$this->add($data);
 	}
 }

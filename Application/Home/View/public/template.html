@@ -57,14 +57,10 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="message-num"></span> <b class="caret"></b>
+
+                    </a>
                     <ul id="notice-menu" class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="__APP__/Index/share/id/2">Alert Name <span class="label label-info">1</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">1</span></a>
-                        </li>
                         <li class="divider"></li>
                         <li>
                             <a href="#">全部标记为已读</a>
@@ -132,21 +128,71 @@
 
 
     <script type="text/javascript">
-    $.get("__APP__/User/getNotice",function(data){
-        console.log(data);
-        if (data.length!=0) {
-            // <li>
-            //     <a href="#">Alert Name <span class="label label-warning">1</span></a>
-            // </li>
-            for (var i = data.length - 1; i >= 0; i--) {
-                // data[i]
-                console.log( data[i].href);
+    //setTimeout(function(){
+        $.get("__APP__/User/getNotice",function(data){
+            console.log(data);
+            if (data.length!=0) {
+                // <li>
+                //     <a href="#">Alert Name <span class="label label-warning">1</span></a>
+                // </li>
+                $('.message-num')[0].innerHTML = data.length;
+                var hrefs = new Array();
+                var NoticeList_info = new Object();
+                var NoticeList_warning = new Array();
 
-                // TODO:添加元素
-                // $("#notice-menu").preppend("<li>公告<span class='label label-warning'>1</span> </li>")；
+                for (var i = data.length - 1; i >= 0; i--) {
+                    // data[i]
+                    //console.log( data[i].href);
+                    // TODO:添加元素
+                    if (parseInt(data[i].readed) ) {
+                        continue;
+                    }
+
+                    if (data[i].type == 'info' && hrefs.includes(data[i].href)) {
+                        
+                        $('#href'+data[i].href[data[i].href.length-1])[0].innerHTML =  (parseInt($('#href'+data[i].href[data[i].href.length-1])[0].innerHTML)+1).toString();
+                        NoticeList_info[data[i].href].push(data[i].id);
+                        
+                        
+                    }else if (data[i].type == 'info' ) {
+
+                        hrefs.push(data[i].href);
+                        NoticeList_info[data[i].href] = new Array();
+                        NoticeList_info[data[i].href].push(data[i].id);
+                        $("#notice-menu").prepend('<li class="data[i].type"> <a href='+data[i].href+'>'+((data[i].description.length>20)?(data[i].description.substring(0,15)+'...'):data[i].description)+' <span id=href'+data[i].href[data[i].href.length-1]+' class="label label-'+data[i].type+'">1</span></a> </li>');
+                    }
+                    
+                    
+
+                    if (data[i].type == 'warning') {
+                        $("#notice-menu").prepend('<li class='+data[i].type+'> <a href='+data[i].href+' >'+((data[i].description.length>20)?(data[i].description.substring(0,15)+'...'):data[i].description)+' <span id=href'+data[i].href[data[i].href.length-1]+' class="label label-'+data[i].type+'">1</span></a> </li>');
+
+                        var x = $("#notice-menu li:first-child");
+                        var id = data[i].id;
+                        NoticeList_warning.push(id);
+                        var description = data[i].description;
+                        x.click(function(){
+                            alert(description);
+                            alert(id)
+                        })
+                    }
+
+
+                    //console.log(hrefs)
+                }
+                /*$('#notice-menu li.info a').click(function(){
+                    alert(NoticeList_info[$(this)[0].href])
+                })*/
+
             }
-        }
-    })
+
+            else{
+                $('.message-num').css("display","hidden");
+            }
+            
+        })
+    //},2000)
+    
 
         
     </script>

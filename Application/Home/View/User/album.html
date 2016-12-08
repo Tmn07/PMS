@@ -109,14 +109,14 @@
 
                     var photoHref = new Array()
                     photos.forEach(function(x){photoHref.push('__URL__/show_photo?id='+x.id)})
-                    //console.log(photoHref)
+                    console.log(photoHref)
                     //console.log( $('.flipster').find('img')[0].src);
 
                     while(photoUrl.length<5){
                         photoUrl.push('__IMG__/no-Pic.png');
                         photoHref.push('javascript:void(0);');
                     }
-                    // console.log(photoUrl)
+                     //console.log(photoUrl)
 
                     $('.flipster').find('img')[0].src = photoUrl[2];
                     $('.flipster').find('img')[1].src = photoUrl[3];
@@ -142,7 +142,7 @@
 
 
                     var picList = [0,1,2,3,4];
-                    console.log(picList)
+                    //console.log(picList)
                     $(".flipster").flipster({ 
                         style: 'carousel', 
                         start: 0 
@@ -163,8 +163,10 @@
                                 break;
                             case 1:
                             case -4:
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+1)%photoUrl.length];
-                                ($('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)).parent()[0].href = photoHref[(picList[4]+1)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+1+photoUrl.length*100)%photoUrl.length];
+                                ($('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)).parent()[0].href = photoHref[(picList[4]+1+photoHref.length*100)%photoHref.length];
+                                
+
                                 /*console.log(photoHref[(picList[4]+1)%photoHref.length])
                                 console.log((picList[4]+1)%photoHref.length)
                                 console.log((picList[4]+1))
@@ -180,10 +182,10 @@
                             case 2:
                             case -3:
                                 //console.log('左移2')
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5)[0].src = photoUrl[(picList[4]+1)%photoUrl.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+2)%photoUrl.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5).parent()[0].href = photoHref[(picList[4]+1)%photoHref.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5).parent()[0].href = photoHref[(picList[4]+2)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5)[0].src = photoUrl[(picList[4]+1+photoUrl.length*100)%photoUrl.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+2+photoUrl.length*100)%photoUrl.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5).parent()[0].href = photoHref[(picList[4]+1+photoHref.length*100)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5).parent()[0].href = photoHref[(picList[4]+2+photoHref.length*100)%photoHref.length];
                                 
                                 picList = picList.map(function(x){
                                     x = x+2;
@@ -195,8 +197,8 @@
                                 //console.log('右移2')
                                 $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].src = photoUrl[(picList[0]-2+photoUrl.length*100)%photoUrl.length];
                                 $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].parent().href = photoHref[(picList[0]-2+photoHref.length*100)%photoHref.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].parent().href = photoHref[(picList[0]-1+photoHref.length*100)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5).parent()[0].href = photoHref[(picList[0]-2+photoHref.length*100)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5).parent()[0].href = photoHref[(picList[0]-1+photoHref.length*100)%photoHref.length];
                                 picList = picList.map(function(x){
                                     x = x-2;
                                     return x;
@@ -206,11 +208,12 @@
                             case -1:
                                 //console.log('右移1')
                                 $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].parent().href = photoHref[(picList[0]-1+photoHref.length*100)%photoHref.length];
-                                /*console.log(parseInt($(this).find('img')[0].id.slice(3)))
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5).parent()[0].href = photoHref[(picList[0]-1+photoHref.length*100)%photoHref.length];
+/*
+                                console.log(parseInt($(this).find('img')[0].id.slice(3)))
                                 console.log(photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length]);
-                                console.log((parseInt($(this).find('img')[0].id.slice(3))+4)%5);*/
-
+                                console.log((parseInt($(this).find('img')[0].id.slice(3))+4)%5);
+*/
                                 picList = picList.map(function(x){
                                     return --x;
                                 });
