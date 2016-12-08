@@ -2,7 +2,7 @@
 namespace Home\Controller;
 use Think\Controller;
 class UserController extends BaseController {
-    public function none()
+    public function help()
     {
         $this->display();
     }
@@ -38,6 +38,8 @@ class UserController extends BaseController {
         }
 
         $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
+
+        // dump($arr);
 
         $this->assign('albums',$arr['album']);
         $this->display('album');

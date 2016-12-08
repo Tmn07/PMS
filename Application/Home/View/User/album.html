@@ -23,7 +23,17 @@
 
 		<volist name='albums' id='vo'>
 	                <div class="img">
-	                    <label>
+	                    <label class="img-{$vo.id}">
+                            <script type="text/javascript">
+                                var username = "{$Think.session.user}";
+                                var aid = "{$vo.id}";
+                                $.get("__APP__/Api/rand_pic",{aid:aid},function(data){
+                                    if (data!=null) {
+                                        var img = $(".img-{$vo.id}").find("img");
+                                        img[0].src = '__PH__/'+username+'/'+data;
+                                    }
+                                })
+                            </script>
 	                        <img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg">
 	                        <div class="">  
                             <!-- __URL__/show_album?id={$vo.id} -->
@@ -233,7 +243,6 @@
 </script>
 
 <script type="text/javascript">
-
 function Trim(str) {
      for (var i=0; (str.charAt(i)==' ') && i<str.length; i++);
      if (i == str.length) return ''; //whole string is space

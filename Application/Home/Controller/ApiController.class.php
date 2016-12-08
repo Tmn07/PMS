@@ -111,4 +111,12 @@ class ApiController extends BaseController {
     	// TODO：跳转的地方?
     	$this->success('删除成功',2);
     }
+
+    // 从某相册随机取一张照片
+    public function rand_pic($aid)
+    {
+        // order by rand() limit 1 
+        $arr = M("photo")->where(array("albumid"=>$aid,"userid"=>session("userid")))->order("rand()")->find();
+        $this->ajaxReturn($arr['filename']);
+    }
 }
