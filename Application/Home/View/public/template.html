@@ -173,7 +173,11 @@
                         var description = data[i].description;
                         x.click(function(){
                             alert(description);
-                            alert(id)
+
+                            $.get('__APP__/Api/setNoticeread',{'id':id},function(){
+                                
+                            })
+
                         })
                     }
 
@@ -188,7 +192,6 @@
 
             else{
                 $('.message-num').css("display","hidden");
-
             }
             
         })

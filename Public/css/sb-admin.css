@@ -5,8 +5,11 @@
  */
 
 /* Global Styles */
-
+html{
+    height: 100%;
+}
 body {
+    height: 100%;
     margin-top: 100px;
     background-color: #31b0d5;
 }
@@ -19,6 +22,7 @@ body {
 
 #wrapper {
     padding-left: 0;
+    height: 100%;
 }
 
 #page-wrapper {

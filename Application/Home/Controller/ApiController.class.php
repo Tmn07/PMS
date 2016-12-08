@@ -64,7 +64,7 @@ class ApiController extends BaseController {
 
     public function setNoticeread()
     {
-    	M("Notice")->where(array("id"=>I("get.sid"),"userid"=>session("userid"),"readed"=>"0"))->setField('readed','1');
+    	M("Notice")->where(array("id"=>I("get.id"),"userid"=>session("userid"),"readed"=>"0"))->setField('readed','1');
     	return 0;
     }
 

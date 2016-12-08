@@ -45,5 +45,30 @@ body{
 		margin-top: 50px;
 		margin-bottom: 50px;
 	}
+
+	.embellish-input{
+ 		display: block;
+  		margin: 0 auto;
+  		width: 100%;
+  		position: fixed;
+  		overflow-x: hidden;
+  		overflow-y: visible;
+  		top: 100px;
+  		z-index: 1600;
+  		margin-left: -225px;
+  		height: 1000px;
+  		text-align: center;
+	}
+	
+	.embellish-img-container{
+		margin-top: 50px;
+		max-height: 1000px;
+		overflow: scroll;
+		margin-bottom: 50px;
+	}
+
+	.embellish-img-container::-webkit-scrollbar {
+    	display: none;
+	}
 	
 }
