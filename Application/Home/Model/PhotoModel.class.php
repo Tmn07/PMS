@@ -11,5 +11,9 @@ class PhotoModel extends RelationModel{
 		return $arr;
 	}
 
-
+	public function getShared($uid)
+	{
+		$arr = $this->where(array("userid"=>$uid,"share"=>"1"))->select();
+		return $arr;
+	}
 }

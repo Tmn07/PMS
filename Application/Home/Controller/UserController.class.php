@@ -149,6 +149,13 @@ class UserController extends BaseController {
 
     }
 
+    public function show_shares()
+    {
+        $arr = D("photo")->getShared(session("userid"));
+        $this->assign('username',session('user'));
+        $this->assign("photos",$arr);
+        $this->display("show_photos");
+    }
 
     public function show_photos()
     {
@@ -157,7 +164,6 @@ class UserController extends BaseController {
         $ret = $model->pd($aid,session('userid'));
         if ($ret) {
             $arr = $model->relation(true)->where(array('id'=>$aid))->find();
-            // dump($arr);
             $this->assign('username',session('user'));
             $this->assign('photos',$arr['photo']);
             $this->display();
