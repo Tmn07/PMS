@@ -99,4 +99,16 @@ class ApiController extends BaseController {
         M('share')->where(array('photoid'=>$id))->delete();
         $this->success('已取消分享',U("user/show_photo?id=$id"),2);
     }
+
+    public function del_pic(){
+    	$id = I("get.id");
+    	$arr = M('photo')->where(array('id'=>$id,'userid'=>session('userid')))->find();
+    	// dump($arr);
+    	if ($arr['share']) {
+    		M('share')->where(array('photoid'=>$id))->delete();
+    	}
+    	M('photo')->where(array('id'=>$id))->delete();
+    	// TODO：跳转的地方?
+    	$this->success('删除成功',2);
+    }
 }
