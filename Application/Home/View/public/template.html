@@ -63,7 +63,7 @@
                     <ul id="notice-menu" class="dropdown-menu alert-dropdown">
                         <li class="divider"></li>
                         <li>
-                            <a href="#">全部标记为已读</a>
+                            <a href="#" id="readAll">全部标记为已读</a>
                         </li>
                     </ul>
                 </li>
@@ -129,21 +129,24 @@
 
     <script type="text/javascript">
 
+        $("#readAll").click(function(){
+            // console.log(this);
+            $.get("__APP__/Api/setNoticereadAll",function(){
+                location.reload();
+            });
+        })
+
         $.get("__APP__/Api/getNotice",function(data){
-            console.log(data);
+            // console.log(data);
             if (data.length!=0) {
-                // <li>
-                //     <a href="#">Alert Name <span class="label label-warning">1</span></a>
-                // </li>
+
                 $('.message-num')[0].innerHTML = data.length;
                 var hrefs = new Array();
                 var NoticeList_info = new Object();
                 var NoticeList_warning = new Array();
 
                 for (var i = data.length - 1; i >= 0; i--) {
-                    // data[i]
-                    //console.log( data[i].href);
-                    // TODO:添加元素
+
                     if (parseInt(data[i].readed) ) {
                         continue;
                     }
@@ -157,9 +160,10 @@
                     }else if (data[i].type == 'info' ) {
 
                         hrefs.push(data[i].href);
+                        console.log(data[i].href);
                         NoticeList_info[data[i].href] = new Array();
                         NoticeList_info[data[i].href].push(data[i].id);
-                        $("#notice-menu").prepend('<li class="data[i].type"> <a href='+data[i].href+'>'+((data[i].description.length>20)?(data[i].description.substring(0,15)+'...'):data[i].description)+' <span id=href'+data[i].href[data[i].href.length-1]+' class="label label-'+data[i].type+'">1</span></a> </li>');
+                        $("#notice-menu").prepend('<li class="data[i].type"> <a href="../index/share/id/'+data[i].href+'">'+((data[i].description.length>20)?(data[i].description.substring(0,15)+'...'):data[i].description)+' <span id=href'+data[i].href[data[i].href.length-1]+' class="label label-'+data[i].type+'">1</span></a> </li>');
                     }
                     
                     
@@ -175,23 +179,14 @@
                             alert(description);
 
                             $.get('__APP__/Api/setNoticeread',{'id':id},function(){
-                                
+                                location.reload();
                             })
-
                         })
                     }
-
-
-                    //console.log(hrefs)
                 }
-                /*$('#notice-menu li.info a').click(function(){
-                    alert(NoticeList_info[$(this)[0].href])
-                })*/
-
             }
-
             else{
-                $('.message-num').css("display","hidden");
+                $('.message-num').css("display","none");
             }
             
         })

@@ -12,6 +12,13 @@
 <body>
 
 <div class="show_photo_container">
+	<present name="Think.session.userid">
+		<a href="__APP__/User"><i class="fa fa-3x fa-chevron-left"></i></a>用户中心
+	<else /> 
+		<a href="__APP__/Index"><i class="fa fa-3x fa-chevron-left"></i></a>首页
+	</present>
+	
+
 	<a href="#"><i class="fa fa-3x fa-chevron-left"></i></a>
 		<img id="photo"  src="__PH__/{$url}">
 		<!-- <img id="photo" src="__PH__/{$username}/{$photo.filename}" > -->
@@ -85,6 +92,7 @@ var jiathis_config={
 <script type="text/javascript">
 	var pid = {$id};
 	var sid = {$sid};
+	var uid = "{$Think.session.userid}";
 
 	$.get('__APP__/Api/getComment/',{"pid":pid},function(res){
 		for (var i = 0; i <res.length; i++) {
@@ -93,7 +101,7 @@ var jiathis_config={
 			var time = res[i].addtime;
 			$('#comment-container').append('<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"> '+name+' </h3> </div> <div class="panel-body">'+text+'</div> </div>')
 		}
-	})
+	});
 	$('#submite-comment').click(function(){
 		var text = $('#comment-text').val();
 		var user = $('#user-name').val();
@@ -101,14 +109,12 @@ var jiathis_config={
 		$.get('__APP__/Api/setComment',{"pid":pid,"name":user,"content":text,"sid":sid },function(res){
 
 			console.log(res);
-			location.reload()
+			location.reload();
 		})
+	});
 
-		// photoid' => $arr['pid'],{$photo.id}
-		// 			'guestname' => $arr['name'],
-		// 			'addtime'  => date('Y-m-d H:i:s'),
-		// 			'content' => $arr['content'],
-	})
+	$.get("__APP__/Api/setNoticeread",{sid:sid});
+
 
 </script>
 
