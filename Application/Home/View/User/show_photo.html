@@ -37,23 +37,25 @@
 
 <div class="embellish" hidden>
     <form class="form-inline embellish-input" role="form">
+
 		<div class="form-group">
 			<label class="sr-only" for="name">参数1</label>
-		    <input type="text" class="form-control" id="name1" placeholder="参数1">
+		    <input type="text" class="form-control" id="name1"  name="n1" value="11" placeholder="参数1">
 		</div>
 		<div class="form-group">
 			<label class="sr-only" for="name">参数2</label>
-		    <input type="text" class="form-control" id="name2" placeholder="参数2">
+		    <input type="text" class="form-control" id="name2" name="n2" value="51" placeholder="参数2">
 		</div>
 		<div class="form-group">
 			<label class="sr-only" for="name">参数2</label>
-		    <input type="text" class="form-control" id="name3" placeholder="参数2">
+		    <input type="text" class="form-control" id="name3" name="n3" value="51" placeholder="参数2">
 		</div>
-		<button type="submit" class="btn btn-default">提交</button>
+		<input type="button" class="btn btn-default" onclick="on()" value="预览">
 		<div class="embellish-img-container">
 			<img id="embellish-img" src="__PH__/{$username}/{$photo.filename}">
 		</div>
-		<button type="submit" class="btn btn-default">下载</button>
+		<button type="button" class="btn btn-default btn-lg"><a href="__ROOT__/py/tmp.jpg" download="photo">下载</a></button>
+		<!-- <button type="submit" class="btn btn-default">下载</button> -->
 	</form>
 
     <div class="gray-canvas"> 
@@ -61,7 +63,26 @@
     </div>
     <!-- 灰色悬浮层 -->
 </div>
+<script type="text/javascript">
 
+	var imgsrc = "{$username}/{$photo.filename}";
+
+	function on() {
+	// alert($("form").serialize())
+	$("#embellish-img")[0].src = "http://imgsrc.baidu.com/forum/w%3D580/sign=670b0633e8c4b7453494b71efffc1e78/da2bdab44aed2e73e68a06368401a18b87d6fa1f.jpg";
+	
+	var data = $(".embellish-input").serialize();
+
+	console.log(data);
+
+	$.get("__APP__/Image/napi?"+data+"&filename="+imgsrc,function(){
+		// location.reload();
+		console.log("ok");
+		$("#embellish-img")[0].src = "__ROOT__/py/tmp.jpg?"+Math.random();
+	});
+	}
+
+</script>
 <script type="text/javascript">
 	var pid = {$photo.id};
 	var user = "{$username}";
