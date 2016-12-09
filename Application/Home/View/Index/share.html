@@ -10,13 +10,15 @@
 
 </head>
 <body>
-
-<div class="show_photo_container">
+<div class="go-back">
 	<present name="Think.session.userid">
-		<a href="__APP__/User"><i class="fa fa-3x fa-chevron-left"></i></a>用户中心
+		<a href="__APP__/User"><i class="fa fa-2x fa-arrow-left">用户中心</i></a>
 	<else /> 
-		<a href="__APP__/Index"><i class="fa fa-3x fa-chevron-left"></i></a>首页
+		<a href="__APP__/Index"><i class="fa fa-2x fa-arrow-left">首页</i></a>
 	</present>
+</div>
+<div class="show_photo_container">
+	
 	
 
 	<a href="#"><i class="fa fa-3x fa-chevron-left"></i></a>
@@ -25,7 +27,7 @@
 	<a href="#"><i class="fa fa-3x fa-chevron-right"></i></a>
 	<div class="btn-group-vertical" id="show_photo_control_panel">
 		
-	    <button type="button" class="btn btn-default btn-lg">评论</button>
+	    <button type="button" class="btn btn-default btn-lg"><a href="#edit-comment">评论</a> </button>
 	    <div class="btn-group-vertical">
 		    <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown">
 		        分享

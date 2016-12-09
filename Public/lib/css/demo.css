@@ -39,12 +39,11 @@
 /* @end */
 /* @group Typography */
 a {
-  color: #da0d25;
+  
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #f22840;
   text-decoration: none;
 }
 p {

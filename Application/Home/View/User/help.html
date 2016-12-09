@@ -1,7 +1,22 @@
 <extend name="public:template" />
 
 <block name="main">
-<iframe src="__PUBLIC__/help.html" style="width: 100%;margin-top: -50px;padding-top: 50px;height: 100%;position: absolute; bottom: 0;left: 0px;">
+<style type="text/css">
+	@media screen and (max-width: 672px){
+		iframe{
+			padding-top:80px;
+		}
+	}
+
+	@media screen and (min-width: 673px){
+		iframe{
+			padding-top:50px;
+		}
+	}
+</style>
+
+
+<iframe src="__PUBLIC__/help.html" style="width: 100%;margin-top: -50px;height: 100%;position: absolute; bottom: 0;left: 0px;">
 	
 </iframe>
 </block>

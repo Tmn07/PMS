@@ -70,5 +70,10 @@ body{
 	.embellish-img-container::-webkit-scrollbar {
     	display: none;
 	}
+
+	.go-back{
+		position: absolute;
+		margin-left: 50px;
+	}
 	
 }
