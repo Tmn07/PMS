@@ -12,6 +12,13 @@
 <body>
 
 <div class="show_photo_container">
+	<present name="Think.session.userid">
+		<a href="__APP__/User"><i class="fa fa-3x fa-chevron-left"></i></a>用户中心
+	<else /> 
+		<a href="__APP__/Index"><i class="fa fa-3x fa-chevron-left"></i></a>首页
+	</present>
+	
+
 	<a href="#"><i class="fa fa-3x fa-chevron-left"></i></a>
 		<img id="photo"  src="__PH__/{$url}">
 		<!-- <img id="photo" src="__PH__/{$username}/{$photo.filename}" > -->
@@ -24,10 +31,10 @@
 		        分享
 		        <span class="caret"></span>
 		    </button>
-			    <ul class="nav nav-pills dropdown-menu class="jiathis_style_32x32"">
-<!-- 			        <li>
+			    <ul class="nav nav-pills dropdown-menu" class="jiathis_style_32x32">
+ 			        <!-- <li>
 						<a class="jiathis_button_qzone share-logo"></a>
-			        </li> -->
+			        </li> --> 
 			        <li>
 						<a class="jiathis_button_cqq share-logo">
 							<img style="margin-left: -88px;margin-top: -68px" src="__PUBLIC__/img/share-logo.png">
@@ -50,8 +57,8 @@
 	</div>
 </div>
 
-<div class="show_photo_comment">
-	<div class="panel panel-default">
+<div id="comment-container" class="show_photo_comment">
+	<!-- <div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				用户1的评论
@@ -60,28 +67,16 @@
 		<div class="panel-body">
 			评论1
 		</div>
-	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">
-				用户2的评论
-			</h3>
-		</div>
-		<div class="panel-body">
-			评论2
-		</div>
-	</div>
-	<ul class="pagination">
-	    <li><a href="#">&laquo;</a></li>
-	    <li><a href="#">1</a></li>
-	    <li><a href="#">2</a></li>
-	    <li><a href="#">3</a></li>
-	    <li><a href="#">4</a></li>
-	    <li><a href="#">5</a></li>
-	    <li><a href="#">&raquo;</a></li>
-	</ul>
+	</div> -->
 </div>
 
+<div id="edit-comment">
+	<div style="padding: 0;margin-bottom: 10px;" class="col-xs-2">
+		<input type="text" name="" id="user-name" class="form-control"  placeholder="尊姓大名"/>
+	</div>
+	<textarea id="comment-text" style="width: 100%;height: 100px;border-radius: 4px" placeholder="我有话说..."></textarea>
+	<input type="button" class="btn btn-default" name="" id="submite-comment" value="发表" />
+</div>
 <!-- JiaThis Button BEGIN -->
 <script type="text/javascript" >
 var jiathis_config={
@@ -92,6 +87,37 @@ var jiathis_config={
 </script>
 <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
 <!-- JiaThis Button END -->
+
+
+<script type="text/javascript">
+	var pid = {$id};
+	var sid = {$sid};
+	var uid = "{$Think.session.userid}";
+
+	$.get('__APP__/Api/getComment/',{"pid":pid},function(res){
+		for (var i = 0; i <res.length; i++) {
+			var name = res[i].guestname;
+			var text = res[i].content;
+			var time = res[i].addtime;
+			$('#comment-container').append('<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"> '+name+' </h3> </div> <div class="panel-body">'+text+'</div> </div>')
+		}
+	});
+	$('#submite-comment').click(function(){
+		var text = $('#comment-text').val();
+		var user = $('#user-name').val();
+
+		$.get('__APP__/Api/setComment',{"pid":pid,"name":user,"content":text,"sid":sid },function(res){
+
+			console.log(res);
+			location.reload();
+		})
+	});
+
+	$.get("__APP__/Api/setNoticeread",{sid:sid});
+
+
+</script>
+
 
 
 </body>

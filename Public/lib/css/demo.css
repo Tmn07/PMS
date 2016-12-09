@@ -250,3 +250,11 @@ body {
 .affix {
   position: fixed;
 }
+
+.message-num{
+  background-color: #d7605c;
+  font-weight: 500;
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-left: 5px;
+}

@@ -65,7 +65,7 @@ $.fn.flipster = function(options) {
 
         function resize() {
             _flipItemsOuter.height(calculateBiggestFlipItemHeight());
-            _flipster.css("height","auto");
+            _flipster.css("height","1000px");
             if ( settings.style === 'carousel' ) { _flipItemsOuter.width(_flipItems.width()); }
         }
 

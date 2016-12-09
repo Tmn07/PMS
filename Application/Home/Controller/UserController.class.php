@@ -2,7 +2,7 @@
 namespace Home\Controller;
 use Think\Controller;
 class UserController extends BaseController {
-    public function none()
+    public function help()
     {
         $this->display();
     }
@@ -39,8 +39,8 @@ class UserController extends BaseController {
 
         $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
 
-        $this->assign('info',$arr);
         // dump($arr);
+
         $this->assign('albums',$arr['album']);
         $this->display('album');
     }
@@ -48,9 +48,6 @@ class UserController extends BaseController {
     public function map()
     {
         $arr = M("photo")->where(array("userid"=>session("userid")))->select();
-        // $prinfo = Protoid();
-        // // dump($prinfo);
-        // $this->assign("prinfo",json_encode($prinfo));
         $this->assign("photos",json_encode($arr));
         $this->assign("username",json_encode(session("user")));
         $this->display();
@@ -76,19 +73,27 @@ class UserController extends BaseController {
     public function uploader()
     {
         $arr = D('User')->relation('album')->where(array('id'=>session('userid')))->find();
-
-        $this->assign('info',$arr);
-        // dump($arr);
         $this->assign('albums',$arr['album']);
-        
+        $this->assign('prid',Protoid());
+
         $this->display('upload');
+    }
+
+    public function updir()
+    {
+        dump (I("post."));
+        $arr = I("post.");
+        session("aid",$arr['album']);
+        session("address",$arr['loc']);
+        session("desc",$arr['des']);
     }
 
     public function up()
     {
 
         $arr = I("post.");
-        // dump($arr);
+        //dump($arr);
+        
         $uploader = new \Org\Util\UploadHandler();
 
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
@@ -125,15 +130,14 @@ class UserController extends BaseController {
                 // 插入数据库
                 $model = M('photo');
                 $data = array();
-                $data['address'] = '黑龙江';
+                $data['address'] = session("address");
                 $data['userid'] = session('userid');
                 $data['filename'] = $result['uploadName'];
                 $data['addtime'] = date('Y-m-d');
-                $data['albumid'] = '1';
+                $data['albumid'] = session("aid");
                 $data['name'] = $uploader->getName();
-                // var_dump($data);
+                $data['description'] = session("desc");
                 $model->add($data);
-                // $this->success('上传成功！');
             }
         }
         // for delete file requests
@@ -147,6 +151,13 @@ class UserController extends BaseController {
 
     }
 
+    public function show_shares()
+    {
+        $arr = D("photo")->getShared(session("userid"));
+        $this->assign('username',session('user'));
+        $this->assign("photos",$arr);
+        $this->display("show_photos");
+    }
 
     public function show_photos()
     {
@@ -155,7 +166,6 @@ class UserController extends BaseController {
         $ret = $model->pd($aid,session('userid'));
         if ($ret) {
             $arr = $model->relation(true)->where(array('id'=>$aid))->find();
-            // dump($arr);
             $this->assign('username',session('user'));
             $this->assign('photos',$arr['photo']);
             $this->display();
@@ -173,10 +183,14 @@ class UserController extends BaseController {
         if (isset($arr)) {
             $this->assign('username',session('user'));
             $this->assign('photo',$arr);
+            // dump($arr);
             if ($arr['share']) {
                 # code...
                 $share_arr = M('share')->where(array('photoid'=>$arr['id']))->find();
                 $this->assign('sid',$share_arr['id']);
+            }
+            else{
+                $this->assign('sid',0);
             }
             $this->display();
         }
@@ -186,37 +200,12 @@ class UserController extends BaseController {
         // dump($arr);
     }
 
-    public function set_share(){
-        $id = I("get.id");
-        $model = D('photo');
-        $arr = $model->where(array('id'=>$id,'userid'=>session('userid')))->find();
-        if (isset($arr)) {
-            $x = M('share')->where(array("photoid"=>$id))->find();
-            // dump(isset($x));
-            if (!isset($x))
-            {
-                $arr['share'] = 1;
-                $ret = $model->save($arr);
-                $data['photoid'] = $arr['id'];
-                $data['url'] = session('user').'/'.$arr['filename'];
-                $sid = M('share')->add($data);
-                $this->success('分享成功',U("index/share?id=$sid"),2);
-            }
-            else{
-                $sid = $x['id'];
-                $this->success('分享成功',U("index/share?id=$sid"),2);
-            }
-        }
-        else{
-            $this->error('非该用户相片','index',2);
-        }
-    }
+
 
     public function add_album(){
         $data = I('post.');
         $data['addtime'] = date('Y-m-d');
         $data['userid'] = session('userid');
-        // dump($data);
         return M('album')->add($data);
     }
 

@@ -57,37 +57,21 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="message-num"></span> <b class="caret"></b>
+
+                    </a>
+                    <ul id="notice-menu" class="dropdown-menu alert-dropdown">
                         <li class="divider"></li>
                         <li>
-                            <a href="#">View All</a>
+                            <a href="#" id="readAll">全部标记为已读</a>
                         </li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {$info.username} <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {$Think.session.user} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-question-circle"></i> 帮助</a>
+                            <a href="__URL__/help"><i class="fa fa-fw fa-question-circle"></i> 帮助</a>
                         </li>
                        
                         <li>
@@ -116,7 +100,7 @@
                         <a class="white"  href="#"><i class="fa fa-fw fa-file"></i> 归档</a>
                     </li>
                     <li>
-                        <a class="white"  href="#"><i class="fa fa-fw fa-share-alt"></i> 分享</a>
+                        <a class="white"  href="__URL__/show_shares"><i class="fa fa-fw fa-share-alt"></i> 分享</a>
                     </li>
                     <li>
                         <a class="white"  href="__URL__/test"><i class="fa fa-fw fa-connectdevelop"></i> 旧版</a>
@@ -144,12 +128,70 @@
 
 
     <script type="text/javascript">
-        /*$('img').click(function(){
-            alert(this.src)
+
+        $("#readAll").click(function(){
+            // console.log(this);
+            $.get("__APP__/Api/setNoticereadAll",function(){
+                location.reload();
+            });
         })
-        $('.img').find('span').click(function(){
-            alert($(this).parent().parent().find('img')[0].src)
-        })*/
+
+        $.get("__APP__/Api/getNotice",function(data){
+            // console.log(data);
+            if (data.length!=0) {
+
+                $('.message-num')[0].innerHTML = data.length;
+                var hrefs = new Array();
+                var NoticeList_info = new Object();
+                var NoticeList_warning = new Array();
+
+                for (var i = data.length - 1; i >= 0; i--) {
+
+                    if (parseInt(data[i].readed) ) {
+                        continue;
+                    }
+
+                    if (data[i].type == 'info' && hrefs.includes(data[i].href)) {
+                        
+                        $('#href'+data[i].href[data[i].href.length-1])[0].innerHTML =  (parseInt($('#href'+data[i].href[data[i].href.length-1])[0].innerHTML)+1).toString();
+                        NoticeList_info[data[i].href].push(data[i].id);
+                        
+                        
+                    }else if (data[i].type == 'info' ) {
+
+                        hrefs.push(data[i].href);
+                        console.log(data[i].href);
+                        NoticeList_info[data[i].href] = new Array();
+                        NoticeList_info[data[i].href].push(data[i].id);
+                        $("#notice-menu").prepend('<li class="data[i].type"> <a href="../index/share/id/'+data[i].href+'">'+((data[i].description.length>20)?(data[i].description.substring(0,15)+'...'):data[i].description)+' <span id=href'+data[i].href[data[i].href.length-1]+' class="label label-'+data[i].type+'">1</span></a> </li>');
+                    }
+                    
+                    
+
+                    if (data[i].type == 'warning') {
+                        $("#notice-menu").prepend('<li class='+data[i].type+'> <a href='+data[i].href+' >'+((data[i].description.length>20)?(data[i].description.substring(0,15)+'...'):data[i].description)+' <span id=href'+data[i].href[data[i].href.length-1]+' class="label label-'+data[i].type+'">1</span></a> </li>');
+
+                        var x = $("#notice-menu li:first-child");
+                        var id = data[i].id;
+                        NoticeList_warning.push(id);
+                        var description = data[i].description;
+                        x.click(function(){
+                            alert(description);
+
+                            $.get('__APP__/Api/setNoticeread',{'id':id},function(){
+                                location.reload();
+                            })
+                        })
+                    }
+                }
+            }
+            else{
+                $('.message-num').css("display","none");
+            }
+            
+        })
+    
+
         
     </script>
 </body>

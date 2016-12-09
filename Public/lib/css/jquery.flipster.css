@@ -30,6 +30,7 @@
   top: 100px;
   z-index: 1600;
   margin-left: -225px;
+  height: 1000px;
 }
 .flip-items,
 .flip-item {
