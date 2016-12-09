@@ -21,9 +21,9 @@
         <div class="row album">
             <div class="col-lg-12 col-md-12 ">
 
-		<volist name='albums' id='vo'>
-	                <div class="img">
-	                    <label class="img-{$vo.id}">
+        <volist name='albums' id='vo'>
+                    <div class="img">
+                        <label class="img-{$vo.id}">
                             <script type="text/javascript">
                                 var username = "{$Think.session.user}";
                                 var aid = "{$vo.id}";
@@ -34,15 +34,15 @@
                                     }
                                 })
                             </script>
-	                        
-	                        <div class="">  
+                            
+                            <div class="">  
                             <!-- __URL__/show_album?id={$vo.id} -->
 
-	                            <a href="javascript:void(0);" num="{$vo.id}"><img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg"><span>{$vo.name}</span></a>
-	                        </div>
-	                    </label>
-	                </div>
-		</volist>
+                                <a href="javascript:void(0);" num="{$vo.id}"><img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg"><span>{$vo.name}</span></a>
+                            </div>
+                        </label>
+                    </div>
+        </volist>
                     <div class="img">
                         <label>
                             
@@ -93,9 +93,9 @@
             </li>
         </ul>
     </div>
-
     <div class="gray-canvas"> 
-        <i class="fa fa-fw fa-close gray-canvas-close"></i>
+        <i class="fa fa-fw fa-close gray-canvas-close" id="canvas-close"></i>
+        <i class="fa fa-fw fa-bars gray-canvas-close" id="another-show"></i>
     </div>
     <!-- 灰色悬浮层 -->
 </div>
@@ -112,6 +112,10 @@
                     "aid":aid
                 },function(data){
                     console.log(data);
+                    
+                    $("#another-show").click(function(){
+                        window.location.href="__URL__/show_photos?id="+aid;
+                    })
                     var username = data.username;
                     var photos = data.photos;
 
@@ -160,7 +164,7 @@
                     }); 
                     var olddom,newdom = 0;
 
-                    $('.gray-canvas-close').click(function(){
+                    $('#canvas-close').click(function(){
                         $(".show_album").css({"display":"none"});
                     })
 
