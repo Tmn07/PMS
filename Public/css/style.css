@@ -129,3 +129,9 @@ body{
 	text-align: center;
 	margin-bottom: 20px;
 }
+
+/*发布消息页面*/
+.set_notice{
+	margin-left: 50%;
+    transform: translate(-50%,50%);
+}

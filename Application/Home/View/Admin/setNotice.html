@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>发布公告</title>
+	<script type="text/javascript" src="__PUBLIC__/lib/js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/lib/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/lib/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+</head>
+<body>
+	<div class="col-md-6 set_notice">
+		<form role="form">
+		  	<div class="form-group">
+		    	<textarea id="notice_content" class="form-control" rows="6"></textarea>
+		  	</div>
+		  	<div class="form-group">
+		    	<input type="button" class="btn btn-default" id="notice_submit" value="发布新公告">
+		  	</div>
+		</form>
+	</div>
+
+
+	<script type="text/javascript">
+		$('#notice_submit').click(function(){
+			var content = $('#notice_content').val();
+			$.get('__URL__/alert?content='+content,function(res){
+				alert('发布成功');
+				location.reload() 
+			})
+		})
+	</script>
+</body>
+</html>
