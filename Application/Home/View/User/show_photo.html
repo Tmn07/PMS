@@ -47,8 +47,8 @@
 		    <input type="text" class="form-control" id="name2" name="n2" value="51" placeholder="参数2">
 		</div>
 		<div class="form-group">
-			<label class="sr-only" for="name">参数2</label>
-		    <input type="text" class="form-control" id="name3" name="n3" value="51" placeholder="参数2">
+			<label class="sr-only" for="name">参数3</label>
+		    <input type="text" class="form-control" id="name3" name="n3" value="51" placeholder="参数3">
 		</div>
 
 		<input type="button" class="btn btn-default" onclick="on()" value="预览">
@@ -88,17 +88,17 @@
 	var pid = {$photo.id};
 	var user = "{$username}";
 	$.get('__APP__/Api/getComment/',{"pid":pid },function(res){
+		console.log(res)
 		for (var i = 0; i <res.length; i++) {
 			var name = res[i].guestname;
 			var text = res[i].content;
 			var time = res[i].addtime;
-			$('#comment-container').append('<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"> '+name+' </h3> </div> <div class="panel-body">'+text+'</div> </div>')
+			$('#comment-container').append('<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"> '+name+' <span>'+time+'</span></h3>  </div> <div class="panel-body">'+text+'</div> </div>')
 		}
 	})
+
 	$('#submite-comment').click(function(){
 		var text = $('#comment-text').val();
-		
-		
 		$.get('__APP__/Api/setComment',{"pid":pid,"name":user,"content":text},function(res){
 			console.log(res);
 			location.reload()

@@ -1,0 +1,66 @@
+<extend name="public:template" />
+
+<block name="main">
+
+<link rel="stylesheet" type="text/css" href="__CSS__/search.css">
+
+<div class="search_container">
+	<form class="form-inline search_input col-xs-12" role="form">
+		<div class="form-group">
+			<label class="sr-only" for="keyword">keyword</label>
+			<input type="text" class="form-control col-xs-3" id="keyword" placeholder="在星图中搜索">
+		</div>
+		<div class="form-group">
+			<label class="sr-only" for="search">submit</label>
+			<input type="button" class=" btn" id="search" value="搜索">
+		</div>
+	</form>
+	<div class="search_res">
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	
+	function add_res(href,img,comment){
+		
+		var div = '<div class="each_res"><a href="'+href+'"><img src="'+img+'"></a><div class="comment_search">';
+		for (var i = 0; i < comment.length ; i++) {
+			if (comment[i].length>81) {
+				div = div + '<span>' + comment.substring(0,80) + '... ...' + '</span>';
+			}
+			else{
+				div = div + '<span>' + comment[i] + '</span>';
+			}
+		}
+		div += '</div></div>';
+		$(".search_res").append(div);
+	}
+
+	$('#search').click(function(){
+		$('.search_res').empty();
+
+		var keyword = $('#keyword').val();
+		$.get('__APP__/Api/searchComment/',{'keyword':keyword},function(res){
+			console.log(res)
+			for(var i=0;i<res.length;i++){
+				comment = new Array();
+				for(var j=0;j<res[i].comment.length;j++){
+					comment.push(res[i].comment[j].content);
+				}
+				
+				img = '__PH__/{$Think.session.user}/'+res[i].filename;
+				href = "__URL__/show_photo?id="+res[i].pid;
+				
+				add_res(href,img,comment)
+			}
+		})
+	})
+
+	/*var comment = ['评论1','评论2']
+	add_res('#','http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg',comment)
+*/
+
+</script>
+
+</block>
