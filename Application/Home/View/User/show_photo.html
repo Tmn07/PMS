@@ -3,7 +3,10 @@
 <block name="main">
 
 <link rel="stylesheet" type="text/css" href="__CSS__/show_photo.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/lib/css/jquery.flipster.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/lib/css/bootstrap-slider.css">
 
+<script type="text/javascript" src="__PUBLIC__/lib/js/bootstrap-slider.js"></script>
 
 <div class="show_photo_container">
 	<a href="#"><i class="fa fa-3x fa-chevron-left"></i></a>
@@ -14,7 +17,7 @@
 	    <button id="comment" type="button" class="btn btn-default btn-lg"><a href="#edit-comment">评论</a> </button>
 	    <button type="button" class="btn btn-default btn-lg"><a href="__APP__/Api/del_pic?id={$photo.id}">删除</a></button>
 	    <button type="button" class="btn btn-default btn-lg"><a href="__PH__/{$username}/{$photo.filename}" download="photo">下载</a></button>
-	    <button id="embellish" type="button" class="btn btn-default btn-lg">美化</button>
+	    <button id="embellish" type="button" class="btn btn-default btn-lg" style="color: #337ab7;">美化</button>
 	    
 	    <if condition="$sid eq 0 ">
 	    <button type="button" class="btn btn-default btn-lg"><a href="__APP__/Api/set_share?id={$photo.id}">分享</a></button>
@@ -28,6 +31,8 @@
 	</div>
 </div>
 
+
+
 <div id="comment-container" class="show_photo_comment"></div>
 
 <div id="edit-comment">
@@ -37,8 +42,11 @@
 
 <div class="embellish" hidden>
     <form class="form-inline embellish-input" role="form">
-
-		<div class="form-group">
+    	<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="11"/>
+    	<input id="ex2" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="51"/>
+    	<input id="ex3" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="51"/>
+		
+		<!-- <div class="form-group">
 			<label class="sr-only" for="name">参数1</label>
 		    <input type="text" class="form-control" id="name1"  name="n1" value="11" placeholder="参数1">
 		</div>
@@ -49,7 +57,7 @@
 		<div class="form-group">
 			<label class="sr-only" for="name">参数3</label>
 		    <input type="text" class="form-control" id="name3" name="n3" value="51" placeholder="参数3">
-		</div>
+		</div> -->
 
 		<input type="button" class="btn btn-default" onclick="on()" value="预览">
 		<div class="embellish-img-container">
@@ -65,22 +73,53 @@
     <!-- 灰色悬浮层 -->
 </div>
 <script type="text/javascript">
+		
+	var num1 = 11 , num2 = 51 , num3 = 51;
+	function setnum1(value){
+		num1 = value;
+	}
+
+	//var mySlider1 = $("#ex1").slider();
+	var mySlider1 = $("#ex1").slider({
+		formatter: function(value) {
+			return '滤波领域直径: ' + value;
+		}
+	});
+	var mySlider2 = $('#ex2').slider({
+		formatter: function(value) {
+			return '空间高斯函数标准差: ' + value;
+		}
+	});
+
+	var mySlider3 = $('#ex3').slider({
+		formatter: function(value) {
+			return '灰度值相似性标准差: ' + value;
+		}
+	});
 
 	var imgsrc = "{$username}/{$photo.filename}";
 
 	function on() {
 	// alert($("form").serialize())
-	$("#embellish-img")[0].src = "http://imgsrc.baidu.com/forum/w%3D580/sign=670b0633e8c4b7453494b71efffc1e78/da2bdab44aed2e73e68a06368401a18b87d6fa1f.jpg";
-	
-	var data = $(".embellish-input").serialize();
 
-	console.log(data);
+		console.log(mySlider1.slider('getValue'));
+		console.log(mySlider2.slider('getValue'));
+		console.log(mySlider3.slider('getValue'));
+		
+		$("#embellish-img")[0].src = "__PH__/{$username}/{$photo.filename}";
+		
+		var data = 'n1='+mySlider1.slider('getValue')+'&n2='+mySlider2.slider('getValue')+'&n3='+mySlider3.slider('getValue')
+		//var data = $(".embellish-input").serialize();
 
-	$.get("__APP__/Image/napi?"+data+"&filename="+imgsrc,function(){
-		// location.reload();
-		console.log("ok");
-		$("#embellish-img")[0].src = "__ROOT__/py/tmp.jpg?"+Math.random();
-	});
+		//console.log(data);
+
+		$.get("__APP__/Image/napi?"+data+"&filename="+imgsrc,function(){
+			// location.reload();
+			console.log("ok");
+			$("#embellish-img")[0].src = "__ROOT__/py/tmp.jpg?"+Math.random();
+		});
+
+		
 	}
 
 </script>
