@@ -3,17 +3,21 @@
 <block name="main">
 
 <link rel="stylesheet" type="text/css" href="__CSS__/show_photo.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/lib/css/jquery.flipster.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/lib/css/bootstrap-slider.css">
 
+<script type="text/javascript" src="__PUBLIC__/lib/js/bootstrap-slider.js"></script>
 
 <div class="show_photo_container">
-	<a href="#"><i class="fa fa-3x fa-chevron-left"></i></a>
+	
 		<img id="photo" src="__PH__/{$username}/{$photo.filename}" >
-	<a href="#"><i class="fa fa-3x fa-chevron-right"></i></a>
 	<div class="btn-group-vertical" id="show_photo_control_panel">
 		
 	    <button id="comment" type="button" class="btn btn-default btn-lg"><a href="#edit-comment">评论</a> </button>
 	    <button type="button" class="btn btn-default btn-lg"><a href="__APP__/Api/del_pic?id={$photo.id}">删除</a></button>
 	    <button type="button" class="btn btn-default btn-lg"><a href="__PH__/{$username}/{$photo.filename}" download="photo">下载</a></button>
+	    <button id="embellish" type="button" class="btn btn-default btn-lg" style="color: #337ab7;">美化</button>
+	    
 	    <if condition="$sid eq 0 ">
 	    <button type="button" class="btn btn-default btn-lg"><a href="__APP__/Api/set_share?id={$photo.id}">分享</a></button>
 		<else />
@@ -26,40 +30,131 @@
 	</div>
 </div>
 
-<div id="comment-container" class="show_photo_comment">
 
-</div>
+
+<div id="comment-container" class="show_photo_comment"></div>
 
 <div id="edit-comment">
 	<textarea id="comment-text" style="width: 100%;height: 100px;border-radius: 4px" placeholder="我有话说..."></textarea>
 	<input type="button" class="btn btn-default" name="" id="submite-comment" value="发表" />
 </div>
 
+<div class="embellish" hidden>
+    <form class="form-inline embellish-input" role="form">
+    	<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="11"/>
+    	<input id="ex2" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="51"/>
+    	<input id="ex3" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="51"/>
+		
+		<!-- <div class="form-group">
+			<label class="sr-only" for="name">参数1</label>
+		    <input type="text" class="form-control" id="name1"  name="n1" value="11" placeholder="参数1">
+		</div>
+		<div class="form-group">
+			<label class="sr-only" for="name">参数2</label>
+		    <input type="text" class="form-control" id="name2" name="n2" value="51" placeholder="参数2">
+		</div>
+		<div class="form-group">
+			<label class="sr-only" for="name">参数3</label>
+		    <input type="text" class="form-control" id="name3" name="n3" value="51" placeholder="参数3">
+		</div> -->
+
+		<input type="button" class="btn btn-default" onclick="on()" value="预览">
+		<div class="embellish-img-container">
+			<img id="embellish-img" src="__PH__/{$username}/{$photo.filename}">
+		</div>
+		<button type="button" class="btn btn-default btn-lg"><a href="__ROOT__/py/tmp.jpg" download="photo">下载</a></button>
+
+	</form>
+
+    <div class="gray-canvas"> 
+        <i class="fa fa-fw fa-close gray-canvas-close"></i>
+    </div>
+    <!-- 灰色悬浮层 -->
+</div>
+<script type="text/javascript">
+		
+	var num1 = 11 , num2 = 51 , num3 = 51;
+	function setnum1(value){
+		num1 = value;
+	}
+
+	//var mySlider1 = $("#ex1").slider();
+	var mySlider1 = $("#ex1").slider({
+		formatter: function(value) {
+			return '滤波领域直径: ' + value;
+		}
+	});
+	var mySlider2 = $('#ex2').slider({
+		formatter: function(value) {
+			return '空间高斯函数标准差: ' + value;
+		}
+	});
+
+	var mySlider3 = $('#ex3').slider({
+		formatter: function(value) {
+			return '灰度值相似性标准差: ' + value;
+		}
+	});
+
+	var imgsrc = "{$username}/{$photo.filename}";
+
+	function on() {
+	// alert($("form").serialize())
+
+		console.log(mySlider1.slider('getValue'));
+		console.log(mySlider2.slider('getValue'));
+		console.log(mySlider3.slider('getValue'));
+		
+		$("#embellish-img")[0].src = "http://img5.imgtn.bdimg.com/it/u=1777144339,2201479408&fm=21&gp=0.jpg";
+		
+		var data = 'n1='+mySlider1.slider('getValue')+'&n2='+mySlider2.slider('getValue')+'&n3='+mySlider3.slider('getValue')
+		//var data = $(".embellish-input").serialize();
+
+		//console.log(data);
+
+		$.get("__APP__/Image/napi?"+data+"&filename="+imgsrc,function(){
+			// location.reload();
+			console.log("ok");
+			$("#embellish-img")[0].src = "__ROOT__/py/tmp.jpg?"+Math.random();
+		});
+
+		
+	}
+
+</script>
 <script type="text/javascript">
 	var pid = {$photo.id};
 	var user = "{$username}";
 	$.get('__APP__/Api/getComment/',{"pid":pid },function(res){
+		console.log(res)
 		for (var i = 0; i <res.length; i++) {
 			var name = res[i].guestname;
 			var text = res[i].content;
 			var time = res[i].addtime;
-			$('#comment-container').append('<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"> '+name+' </h3> </div> <div class="panel-body">'+text+'</div> </div>')
+			$('#comment-container').append('<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"> '+name+' <span>'+time+'</span></h3>  </div> <div class="panel-body">'+text+'</div> </div>')
 		}
 	})
+
 	$('#submite-comment').click(function(){
 		var text = $('#comment-text').val();
-		
-		
 		$.get('__APP__/Api/setComment',{"pid":pid,"name":user,"content":text},function(res){
 			console.log(res);
 			location.reload()
 		})
 
-		// photoid' => $arr['pid'],{$photo.id}
-		// 			'guestname' => $arr['name'],
-		// 			'addtime'  => date('Y-m-d H:i:s'),
-		// 			'content' => $arr['content'],
 	})
+
+	$('#embellish').click(function(){
+		$(".embellish").css({"display":"block"});
+		$('#wrapper').css({'overflow': 'hidden'});
+	})
+
+	$('.gray-canvas-close').click(function(){
+		$(".embellish").css({"display":"none"});
+		$('#wrapper').css({'overflow': 'auto'});
+    })
+
+    $.get("__APP__/Api/setNoticeread",{sid:"{$sid}"});
 
 </script>
 

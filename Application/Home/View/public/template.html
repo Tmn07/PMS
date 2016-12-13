@@ -57,17 +57,13 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="message-num"></span> <b class="caret"></b>
+
+                    </a>
                     <ul id="notice-menu" class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="__APP__/Index/share/id/2">Alert Name <span class="label label-info">1</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">1</span></a>
-                        </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#">全部标记为已读</a>
+                            <a href="#" id="readAll">全部标记为已读</a>
                         </li>
                     </ul>
                 </li>
@@ -101,7 +97,7 @@
                         <a class="white"  href="__URL__/map"><i class="fa fa-fw fa-map"></i> 地图</a>
                     </li>
                     <li>
-                        <a class="white"  href="#"><i class="fa fa-fw fa-file"></i> 归档</a>
+                        <a class="white"  href="__URL__/Search"><i class="fa fa-fw fa-search"></i> 搜索</a>
                     </li>
                     <li>
                         <a class="white"  href="__URL__/show_shares"><i class="fa fa-fw fa-share-alt"></i> 分享</a>
@@ -132,21 +128,71 @@
 
 
     <script type="text/javascript">
-    $.get("__APP__/Api/getNotice",function(data){
-        console.log(data);
-        if (data.length!=0) {
-            // <li>
-            //     <a href="#">Alert Name <span class="label label-warning">1</span></a>
-            // </li>
-            for (var i = data.length - 1; i >= 0; i--) {
-                // data[i]
-                console.log( data[i].href);
 
-                // TODO:添加元素
-                // $("#notice-menu").preppend("<li>公告<span class='label label-warning'>1</span> </li>")；
+        $("#readAll").click(function(){
+            // console.log(this);
+            $.get("__APP__/Api/setNoticereadAll",function(){
+                location.reload();
+            });
+        })
+
+        $.get("__APP__/Api/getNotice",function(data){
+             console.log(data);
+            if (data.length!=0) {
+
+                $('.message-num')[0].innerHTML = data.length;
+                var hrefs = new Array();
+                var NoticeList_info = new Object();
+                var NoticeList_warning = new Array();
+
+                for (var i = data.length - 1; i >= 0; i--) {
+
+                    if (parseInt(data[i].readed) ) {
+                        continue;
+                    }
+
+                    if (data[i].type == 'info' && hrefs.includes(data[i].href)) {
+                        
+                        $('#href'+data[i].href[data[i].href.length-1])[0].innerHTML =  (parseInt($('#href'+data[i].href[data[i].href.length-1])[0].innerHTML)+1).toString();
+                        NoticeList_info[data[i].href].push(data[i].id);
+                        
+                        
+                    }else if (data[i].type == 'info' ) {
+
+                        hrefs.push(data[i].href);
+                        console.log(data[i].href);
+                        NoticeList_info[data[i].href] = new Array();
+                        NoticeList_info[data[i].href].push(data[i].id);
+                        $("#notice-menu").prepend('<li class="data[i].type"> <a href="../index/share/id/'+data[i].href+'">'+((data[i].description.length>15)?(data[i].description.substring(0,15)+'...'):data[i].description)+' <span id=href'+data[i].href[data[i].href.length-1]+' class="label label-'+data[i].type+'">1</span></a> </li>');
+                    }
+                    
+                    
+
+                    if (data[i].type == 'warning') {
+                        $("#notice-menu").prepend('<li class='+data[i].type+'> <a href='+data[i].href+' >'+((data[i].description.length>20)?(data[i].description.substring(0,15)+'...'):data[i].description)+' <span id=href'+data[i].href[data[i].href.length-1]+' class="label label-'+data[i].type+'">1</span></a> </li>');
+                        function addaction(){
+                            var x = $("#notice-menu li:first-child");
+                            var id = data[i].id;
+                            NoticeList_warning.push(id);
+                            var description = data[i].description;
+                            x.click(function(){
+                                alert(description);
+
+                                /*$.get('__APP__/Api/setNoticeread',{'id':id},function(){
+                                    location.reload();
+                                })*/
+                            })
+                        }
+                        addaction()
+                    }
+                }
             }
-        }
-    })
+            else{
+                $('.message-num').css("display","none");
+            }
+            
+        })
+    
 
         
     </script>

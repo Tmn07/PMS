@@ -35,6 +35,10 @@ return array(
 
      '__PH__' 	=> __ROOT__.'/Public/photo',
 
+     '__JSON__' 	=> __ROOT__.'/Public/json',
+
+     '__IMG__' 	=> __ROOT__.'/Public/img',
+
 	)
 
 	

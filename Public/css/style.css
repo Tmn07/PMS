@@ -1,3 +1,5 @@
+
+
 body{
 	font-family: 'Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif;
 	background-color: #f7fafc;
@@ -126,4 +128,10 @@ body{
 .footer{
 	text-align: center;
 	margin-bottom: 20px;
+}
+
+/*发布消息页面*/
+.set_notice{
+	margin-left: 50%;
+    transform: translate(-50%,50%);
 }

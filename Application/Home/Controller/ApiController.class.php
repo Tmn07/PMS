@@ -32,25 +32,38 @@ class ApiController extends BaseController {
 	}
 
 	// 根据评论，搜索照片。对该userid用户的照片做如下search
-	public function searchComment($pid,$keyword)
-	{
-		$Model = new \Think\Model();
+    public function searchComment($keyword)
+    {
 
-		if (preg_match("/[\x7f-\xff]/", $keyword)) { 
-			// 中文使用like%%
-			$arr = $Model->query("SELECT * FROM  `comment` WHERE  `content` LIKE  '%$keyword%' AND  `photoid` =  $pid");
-		}else{ 
-			// 只含英文单词，使用全文索引
-			$arr = $Model->query("SELECT * FROM  `comment` WHERE  MATCH(content) AGAINST('$keyword') AND  `photoid` =  $pid");
-			// 全文索引存在搜索不到的情况。
-			if (sizeof($arr) == 0) {
-				# code...
-				$arr = $Model->query("SELECT * FROM  `comment` WHERE  `content` LIKE  '%$keyword%' AND  `photoid` =  $pid");
-			}
-		} 
-		dump($arr);
-		// $this->ajaxReturn($arr);
-	}
+        $Model = new \Think\Model();
+
+        $uid = session("userid");
+        if (preg_match("/[\x7f-\xff]/", $keyword)) { 
+            // 中文使用like%%
+            $arr = $Model->query("SELECT c.photoid, c.addtime, c.content, p.filename, p.address FROM `comment` as c inner join `photo` as p on p.id = c.photoid WHERE userid = '$uid' and c.content LIKE '%$keyword%'");
+        }else{ 
+            // 只含英文单词，使用全文索引
+            $arr = $Model->query("SELECT c.photoid, c.addtime, c.content, p.filename, p.address FROM `comment` as c inner join `photo` as p on p.id = c.photoid WHERE userid = '$uid' and  MATCH(c.content) AGAINST('$keyword')");
+
+            // 全文索引存在搜索不到的情况。
+            if (sizeof($arr) == 0) {
+                $arr = $Model->query("SELECT c.photoid, c.addtime, c.content, p.filename, p.address FROM `comment` as c inner join `photo` as p on p.id = c.photoid WHERE userid = '$uid' and c.content LIKE '%$keyword%'");
+            }
+        }
+        $data = array();
+        $pids = array();
+        foreach ($arr as $key => $value) {
+            $index = array_search($value['photoid'],$pids) ;
+            if ( is_int($index)) {
+                $data[$index]["comment"][] = array("content"=>$value['content'],"addtime"=>$value['addtime']);
+            }
+            else{
+                $data[] = array('pid'=>$value['photoid'],'filename'=>$value['filename'],'comment'=>array(array("content"=>$value['content'],"addtime"=>$value['addtime'])));
+                $pids[] = $value['photoid'];
+            }
+        }
+        $this->ajaxReturn($data);
+    }
 
     public function getNotice()
     {
@@ -64,7 +77,16 @@ class ApiController extends BaseController {
 
     public function setNoticeread()
     {
-    	M("Notice")->where(array("id"=>I("get.sid"),"userid"=>session("userid"),"readed"=>"0"))->setField('readed','1');
+        if (I("get.id")) {
+            // notice id
+            M("Notice")->where(array("id"=>I("get.id"),"userid"=>session("userid"),"readed"=>"0"))->setField('readed','1');
+        }
+        else{
+            M("Notice")->where(array("href"=>I("get.sid"),"userid"=>session("userid"),"readed"=>"0"))->setField('readed','1');
+        }
+
+
+
     	return 0;
     }
 

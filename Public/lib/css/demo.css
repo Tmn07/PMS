@@ -39,12 +39,11 @@
 /* @end */
 /* @group Typography */
 a {
-  color: #da0d25;
+  
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #f22840;
   text-decoration: none;
 }
 p {
@@ -249,4 +248,12 @@ body {
 }
 .affix {
   position: fixed;
+}
+
+.message-num{
+  background-color: #d7605c;
+  font-weight: 500;
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-left: 5px;
 }

@@ -13,6 +13,7 @@ class AdminController extends BaseController {
     	$status = M('admin')->where(array('name' => $data['username'],'pwd' => $data['pwd']))->find();
     	if (isset($status)) {
 			session("adminid",$status['id']);
+            $this->display('setNotice');
     	}
     	else{
     		$this->error('密码错误或者用户不存在','index',2);

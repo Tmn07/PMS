@@ -265,4 +265,10 @@ class UserController extends BaseController {
             $this->error($status,'index/index',2);
     	}
     }
+
+    public function Search()
+    {
+        $this->display('search');
+        //$this->ajaxReturn($arr);
+    }
 }

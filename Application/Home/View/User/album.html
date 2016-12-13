@@ -21,9 +21,9 @@
         <div class="row album">
             <div class="col-lg-12 col-md-12 ">
 
-		<volist name='albums' id='vo'>
-	                <div class="img">
-	                    <label class="img-{$vo.id}">
+        <volist name='albums' id='vo'>
+                    <div class="img">
+                        <label class="img-{$vo.id}">
                             <script type="text/javascript">
                                 var username = "{$Think.session.user}";
                                 var aid = "{$vo.id}";
@@ -34,20 +34,21 @@
                                     }
                                 })
                             </script>
-	                        <img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg">
-	                        <div class="">  
-                            <!-- __URL__/show_album?id={$vo.id} -->
-	                            <a href="javascript:void(0);" num="{$vo.id}"><span>{$vo.name}</span></a>
-	                        </div>
-	                    </label>
-	                </div>
-		</volist>
-                    <div class="img">
-                        <label>
-                            <i class="fa fa-plus-square-o" aria-hidden="true" style="margin-left: 20px;font-size:200px"></i>
+                            
                             <div class="">  
                             <!-- __URL__/show_album?id={$vo.id} -->
-                                <a href="javascript:void(0);" onclick="add_ablum()"><span>新建</span></a>
+
+                                <a href="javascript:void(0);" num="{$vo.id}"><img src="http://www.sucaitianxia.com/Photo/pic/200909/haiys62.jpg"><span>{$vo.name}</span></a>
+                            </div>
+                        </label>
+                    </div>
+        </volist>
+                    <div class="img">
+                        <label>
+                            
+                            <div class="">  
+                            <!-- __URL__/show_album?id={$vo.id} -->
+                                <a href="javascript:void(0);" onclick="add_ablum()"><i class="fa fa-plus-square-o" aria-hidden="true" style="margin-left: 20px;font-size:200px"></i><br><span>新建</span></a>
                             </div>
                         </label>
                     </div>
@@ -92,9 +93,9 @@
             </li>
         </ul>
     </div>
-
     <div class="gray-canvas"> 
-        <i class="fa fa-fw fa-close gray-canvas-close"></i>
+        <i class="fa fa-fw fa-close gray-canvas-close" id="canvas-close"></i>
+        <i class="fa fa-fw fa-bars gray-canvas-close" id="another-show"></i>
     </div>
     <!-- 灰色悬浮层 -->
 </div>
@@ -111,6 +112,10 @@
                     "aid":aid
                 },function(data){
                     console.log(data);
+                    
+                    $("#another-show").click(function(){
+                        window.location.href="__URL__/show_photos?id="+aid;
+                    })
                     var username = data.username;
                     var photos = data.photos;
 
@@ -119,14 +124,14 @@
 
                     var photoHref = new Array()
                     photos.forEach(function(x){photoHref.push('__URL__/show_photo?id='+x.id)})
-                    //console.log(photoHref)
+                    console.log(photoHref)
                     //console.log( $('.flipster').find('img')[0].src);
 
                     while(photoUrl.length<5){
                         photoUrl.push('__IMG__/no-Pic.png');
                         photoHref.push('javascript:void(0);');
                     }
-                    // console.log(photoUrl)
+                     //console.log(photoUrl)
 
                     $('.flipster').find('img')[0].src = photoUrl[2];
                     $('.flipster').find('img')[1].src = photoUrl[3];
@@ -152,14 +157,14 @@
 
 
                     var picList = [0,1,2,3,4];
-                    console.log(picList)
+                    //console.log(picList)
                     $(".flipster").flipster({ 
                         style: 'carousel', 
                         start: 0 
                     }); 
                     var olddom,newdom = 0;
 
-                    $('.gray-canvas-close').click(function(){
+                    $('#canvas-close').click(function(){
                         $(".show_album").css({"display":"none"});
                     })
 
@@ -173,8 +178,10 @@
                                 break;
                             case 1:
                             case -4:
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+1)%photoUrl.length];
-                                ($('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)).parent()[0].href = photoHref[(picList[4]+1)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+1+photoUrl.length*100)%photoUrl.length];
+                                ($('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)).parent()[0].href = photoHref[(picList[4]+1+photoHref.length*100)%photoHref.length];
+                                
+
                                 /*console.log(photoHref[(picList[4]+1)%photoHref.length])
                                 console.log((picList[4]+1)%photoHref.length)
                                 console.log((picList[4]+1))
@@ -190,10 +197,10 @@
                             case 2:
                             case -3:
                                 //console.log('左移2')
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5)[0].src = photoUrl[(picList[4]+1)%photoUrl.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+2)%photoUrl.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5).parent()[0].href = photoHref[(picList[4]+1)%photoHref.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5).parent()[0].href = photoHref[(picList[4]+2)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5)[0].src = photoUrl[(picList[4]+1+photoUrl.length*100)%photoUrl.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5)[0].src = photoUrl[(picList[4]+2+photoUrl.length*100)%photoUrl.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+1)%5).parent()[0].href = photoHref[(picList[4]+1+photoHref.length*100)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+2)%5).parent()[0].href = photoHref[(picList[4]+2+photoHref.length*100)%photoHref.length];
                                 
                                 picList = picList.map(function(x){
                                     x = x+2;
@@ -205,8 +212,8 @@
                                 //console.log('右移2')
                                 $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].src = photoUrl[(picList[0]-2+photoUrl.length*100)%photoUrl.length];
                                 $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].parent().href = photoHref[(picList[0]-2+photoHref.length*100)%photoHref.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5)[0].parent().href = photoHref[(picList[0]-1+photoHref.length*100)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5).parent()[0].href = photoHref[(picList[0]-2+photoHref.length*100)%photoHref.length];
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+4)%5).parent()[0].href = photoHref[(picList[0]-1+photoHref.length*100)%photoHref.length];
                                 picList = picList.map(function(x){
                                     x = x-2;
                                     return x;
@@ -216,11 +223,12 @@
                             case -1:
                                 //console.log('右移1')
                                 $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].src = photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length];
-                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5)[0].parent().href = photoHref[(picList[0]-1+photoHref.length*100)%photoHref.length];
-                                /*console.log(parseInt($(this).find('img')[0].id.slice(3)))
+                                $('#img' + (parseInt($(this).find('img')[0].id.slice(3))+3)%5).parent()[0].href = photoHref[(picList[0]-1+photoHref.length*100)%photoHref.length];
+/*
+                                console.log(parseInt($(this).find('img')[0].id.slice(3)))
                                 console.log(photoUrl[(picList[0]-1+photoUrl.length*100)%photoUrl.length]);
-                                console.log((parseInt($(this).find('img')[0].id.slice(3))+4)%5);*/
-
+                                console.log((parseInt($(this).find('img')[0].id.slice(3))+4)%5);
+*/
                                 picList = picList.map(function(x){
                                     return --x;
                                 });

@@ -10,16 +10,25 @@
 
 </head>
 <body>
-
+<div class="go-back">
+	<present name="Think.session.userid">
+		<a href="__APP__/User"><i class="fa fa-2x fa-arrow-left">用户中心</i></a>
+	<else /> 
+		<a href="__APP__/Index"><i class="fa fa-2x fa-arrow-left">首页</i></a>
+	</present>
+</div>
 <div class="show_photo_container">
-	<a href="#"><i class="fa fa-3x fa-chevron-left"></i></a>
+	
+	
+
+	
 		<img id="photo"  src="__PH__/{$url}">
 		<!-- <img id="photo" src="__PH__/{$username}/{$photo.filename}" > -->
-	<a href="#"><i class="fa fa-3x fa-chevron-right"></i></a>
+	
 	<div class="btn-group-vertical" id="show_photo_control_panel">
 		
-	    <button type="button" class="btn btn-default btn-lg">评论</button>
-	    <div class="btn-group-vertical">
+	    <button type="button" class="btn btn-default btn-lg"><a href="#edit-comment">评论</a> </button>
+	    
 		    <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown">
 		        分享
 		        <span class="caret"></span>
@@ -46,25 +55,16 @@
 					<!-- <a class="jiathis_counter_style"></a> -->
 			    </ul>
 
-	    </div>
+	    
 	</div>
 </div>
 
 <div id="comment-container" class="show_photo_comment">
-	<!-- <div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">
-				用户1的评论
-			</h3>
-		</div>
-		<div class="panel-body">
-			评论1
-		</div>
-	</div> -->
+
 </div>
 
 <div id="edit-comment">
-	<div style="padding: 0;margin-bottom: 10px;" class="col-xs-2">
+	<div style="padding: 0;margin-bottom: 10px;" class="col-sm-2 col-xs-4">
 		<input type="text" name="" id="user-name" class="form-control"  placeholder="尊姓大名"/>
 	</div>
 	<textarea id="comment-text" style="width: 100%;height: 100px;border-radius: 4px" placeholder="我有话说..."></textarea>
@@ -85,27 +85,29 @@ var jiathis_config={
 <script type="text/javascript">
 	var pid = {$id};
 	var sid = {$sid};
+	var uid = "{$Think.session.userid}";
+
 	$.get('__APP__/Api/getComment/',{"pid":pid},function(res){
 		for (var i = 0; i <res.length; i++) {
 			var name = res[i].guestname;
 			var text = res[i].content;
 			var time = res[i].addtime;
-			$('#comment-container').append('<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"> '+name+' </h3> </div> <div class="panel-body">'+text+'</div> </div>')
+			$('#comment-container').append('<div class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"> '+name+' <span>'+time+'</span></h3>  </div> <div class="panel-body">'+text+'</div> </div>')
 		}
-	})
+	});
 	$('#submite-comment').click(function(){
 		var text = $('#comment-text').val();
 		var user = $('#user-name').val();
-		$.get('__APP__/Api/setComment',{"pid":pid,"name":user,"content":text,"sid":sid },function(res){
-			console.log(res);
-			location.reload()
-		})
 
-		// photoid' => $arr['pid'],{$photo.id}
-		// 			'guestname' => $arr['name'],
-		// 			'addtime'  => date('Y-m-d H:i:s'),
-		// 			'content' => $arr['content'],
-	})
+		$.get('__APP__/Api/setComment',{"pid":pid,"name":user,"content":text,"sid":sid },function(res){
+
+			console.log(res);
+			location.reload();
+		})
+	});
+
+	$.get("__APP__/Api/setNoticeread",{sid:sid});
+
 
 </script>
 
