@@ -138,16 +138,42 @@
     border-radius: 4px;
     border: 1px dashed #CCCCCC;
 }
-.qq-upload-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    max-height: 370px;
-    overflow-y: auto;
-    box-shadow: 0px 1px 0px rgba(15, 15, 50, 0.14);
-    clear: both;
+
+@media (min-width:768px){
+    .qq-upload-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        max-height: 370px;
+        overflow-y: auto;
+        box-shadow: 0px 1px 0px rgba(15, 15, 50, 0.14);
+        clear: both;
+    }
 }
 
+@media(max-width:1200px) and (min-width:768px){
+    .qq-upload-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        max-height: 300px;
+        overflow-y: auto;
+        box-shadow: 0px 1px 0px rgba(15, 15, 50, 0.14);
+        clear: both;
+    }
+}
+
+@media (max-width:768px){
+    .qq-upload-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        max-height: 170px;
+        overflow-y: auto;
+        box-shadow: 0px 1px 0px rgba(15, 15, 50, 0.14);
+        clear: both;
+    }
+}
 
 /* Uploaded Elements
 ------------------------------------------ */

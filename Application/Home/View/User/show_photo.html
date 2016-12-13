@@ -41,28 +41,22 @@
 
 <div class="embellish" hidden>
     <form class="form-inline embellish-input" role="form">
-    	<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="11"/>
-    	<input id="ex2" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="51"/>
-    	<input id="ex3" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="51"/>
+    	<div class="form-group">
+    		<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="11"/>
+	    	<input id="ex2" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="51"/>
+	    	<input id="ex3" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="51"/>
+			
+    	</div>
+    	<div class="form-group">
+    		<input type="button" class="btn btn-default" onclick="on()" value="预览">
+			<button type="button" class="btn btn-default"><a style="color: black" href="__ROOT__/py/tmp.jpg" download="photo">下载</a></button>
 		
-		<!-- <div class="form-group">
-			<label class="sr-only" for="name">参数1</label>
-		    <input type="text" class="form-control" id="name1"  name="n1" value="11" placeholder="参数1">
-		</div>
-		<div class="form-group">
-			<label class="sr-only" for="name">参数2</label>
-		    <input type="text" class="form-control" id="name2" name="n2" value="51" placeholder="参数2">
-		</div>
-		<div class="form-group">
-			<label class="sr-only" for="name">参数3</label>
-		    <input type="text" class="form-control" id="name3" name="n3" value="51" placeholder="参数3">
-		</div> -->
+    	</div>
 
-		<input type="button" class="btn btn-default" onclick="on()" value="预览">
 		<div class="embellish-img-container">
 			<img id="embellish-img" src="__PH__/{$username}/{$photo.filename}">
 		</div>
-		<button type="button" class="btn btn-default btn-lg"><a href="__ROOT__/py/tmp.jpg" download="photo">下载</a></button>
+		
 
 	</form>
 

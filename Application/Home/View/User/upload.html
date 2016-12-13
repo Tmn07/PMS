@@ -70,34 +70,41 @@
             </div>
             <div class="buttons">
             <form class="form-inline" role="form">
-                <div class="qq-upload-button-selector qq-upload-button">
-                    <div>选择图片</div>
-                </div>
-                <button type="button" id="trigger-upload" class="btn btn-primary">
-                    <i class="fa fa-fw fa-upload"></i> 上传
-                </button>
                 <div class="form-group">
-                    <select id="albumName" class="form-control" name='aid'>
-                        <volist name='albums' id='vo'>
-                            <option value="{$vo.id}">{$vo.name}</option>
-                        </volist>
-                    </select>
+                    <!-- <div class="qq-upload-button-selector qq-upload-button btn btn-primary">
+                        <div>选择图片</div>
+                    </div> -->
+                    <button class="qq-upload-button-selector btn btn-primary">
+                        <div>选择图片</div>
+                    </button>
                 </div>
                 <div class="form-group">
-                    <label class="sr-only" for="exampleInputEmail2">照片描述</label>
-                    <input id="description" type="email" class="form-control" id="exampleInputEmail2" placeholder="简单描述一下你的照片">
+                    <button type="button" id="trigger-upload" class="btn btn-primary">
+                        <i class="fa fa-fw fa-upload"></i> 上传
+                    </button>
                 </div>
-
                 <div class="form-group">
-                    <label class="sr-only" for="exampleInputEmail2">地理位置</label>
-                        <select name="pro" id="location" type="email" class="form-control" id="exampleInputEmail2" placeholder="拍摄地点">
-                            <volist name='prid' id='vo'>
-                                <option value="{$vo.name}">{$vo.name}</option>
+                    <div class="form-group">
+                        <select id="albumName" class="form-control" name='aid'>
+                            <volist name='albums' id='vo'>
+                                <option value="{$vo.id}">{$vo.name}</option>
                             </volist>
                         </select>
-                    <!-- <input id="location" type="email" class="form-control" id="exampleInputEmail2" placeholder="拍摄地点"> -->
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail2">照片描述</label>
+                        <input id="description" type="email" class="form-control" id="exampleInputEmail2" placeholder="简单描述一下你的照片">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail2">地理位置</label>
+                            <select name="pro" id="location" type="email" class="form-control" id="exampleInputEmail2" placeholder="拍摄地点">
+                                <volist name='prid' id='vo'>
+                                    <option value="{$vo.name}">{$vo.name}</option>
+                                </volist>
+                            </select>
+                        <!-- <input id="location" type="email" class="form-control" id="exampleInputEmail2" placeholder="拍摄地点"> -->
+                    </div>
                 </div>
-                
                 </form>
                     
             </div>
@@ -158,14 +165,37 @@
             background-image: none;
         }
 
-        .qq-uploader{
-            z-index: 1700;
-            left: -225px;
-            width: 70%;
-            transform: translate(50%);
-            height: 450px;
-            top: 100px;
-            position: fixed;
+        @media(min-width:1200px){
+            .qq-uploader{
+                z-index: 1700;
+                left: -225px;
+                width: 70%;
+                transform: translate(50%);
+                height: 450px;
+                top: 100px;
+                position: fixed;
+            }
+        }
+        @media(max-width:1200px) and (min-width:768px){
+            .qq-uploader{
+                z-index: 1700;
+                left: -175px;
+                width: 70%;
+                transform: translate(50%);
+                height: 450px;
+                top: 100px;
+                position: fixed;
+            }
+        }
+        @media(max-width:768px) {
+            .qq-uploader{
+                z-index: 1700;
+                width: 80%;
+                left: 10%;
+                height: 450px;
+                top: 100px;
+                position: fixed;
+            }
         }
 
         #fine-uploader-manual-trigger .qq-upload-button {

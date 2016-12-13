@@ -42,12 +42,12 @@
 	<div class="footer">
 			<span>© 星图</span>
 			<span>·</span>
-			<a href="#">github</a>
+			<a href="https://github.com/qq519043202/PMS">github</a>
 			<span>·</span>
-			<a href="#">联系我们</a>
+			<a href="https://github.com/qq519043202/PMS">联系我们</a>
 			<span>·</span>
 			<span>powered by 
-				<a href="#">hitlxc</a>
+				<a href="https://github.com/hitlxc">hitlxc</a>
 				<span>·</span>
 				<a href="http://tmn07.cn/">Tmn07</a>
 			</span>
@@ -55,16 +55,20 @@
 </body>
 
 <script type="text/javascript">
+	var left = $('.navs-slider-bar').css('left');
+
 	$('#signup').click(function(){
 		$('.signin').css('display','none');
 		$('.signup').css('display','block');
-		$('.navs-slider-bar').animate({left:'98px'})
+
+		$('.navs-slider-bar').animate({left:left})
 	})
 
 	$('#signin').click(function(){
 		$('.signup').css('display','none');
 		$('.signin').css('display','block');
-		$('.navs-slider-bar').animate({left:'168px'})
+		var left_value = (parseInt(left.substring(0,2))+70+'px');
+		$('.navs-slider-bar').animate({left:left_value})
 	})
 </script>
 </html>

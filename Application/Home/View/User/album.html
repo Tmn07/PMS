@@ -116,6 +116,11 @@
                     $("#another-show").click(function(){
                         window.location.href="__URL__/show_photos?id="+aid;
                     })
+
+                    if(screen.width<1000){
+                        window.location.href="__URL__/show_photos?id="+aid;
+                    }
+
                     var username = data.username;
                     var photos = data.photos;
 
