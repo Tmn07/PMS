@@ -38,11 +38,11 @@
 	}
 
 	$('#search').click(function(){
-		$('.search_res').empty();
+		
 
 		var keyword = $('#keyword').val();
 		$.get('__APP__/Api/searchComment/',{'keyword':keyword},function(res){
-			console.log(res)
+			
 			for(var i=0;i<res.length;i++){
 				comment = new Array();
 				for(var j=0;j<res[i].comment.length;j++){
