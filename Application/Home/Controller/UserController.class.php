@@ -100,7 +100,7 @@ class UserController extends BaseController {
         $uploader->allowedExtensions = array("jpeg","jpg","png"); // all files types allowed by default
 
         // Specify max file size in bytes.
-        $uploader->sizeLimit = 512000;
+        $uploader->sizeLimit = 5120000;
 
         // Specify the input name set in the javascript.
         $uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
