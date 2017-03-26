@@ -116,13 +116,14 @@ CREATE TABLE `notice` (
 -- 最后检查： 2016-12-09 06:24:32
 --
 
+
 CREATE TABLE `photo` (
   `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `albumid` int(11) NOT NULL,
   `name` varchar(30) COLLATE utf8_bin NOT NULL,
   `filename` varchar(42) COLLATE utf8_bin NOT NULL,
-  `description` varchar(50) COLLATE utf8_bin NOT NULL,
+  `description` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `address` varchar(20) COLLATE utf8_bin NOT NULL,
   `addtime` date NOT NULL,
   `share` tinyint(1) NOT NULL,
