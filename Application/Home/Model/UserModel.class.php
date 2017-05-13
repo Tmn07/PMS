@@ -4,9 +4,10 @@ use Think\Model\RelationModel;
 class UserModel extends RelationModel{
     protected $tableName = 'user'; 
     protected $_validate = array(
-    array('username','require ','账号名已被使用',1,'unique',1), // 在新增的时候验证name字段是否唯一
+    array('username','require','缺少账号名'),
+    array('username','require','账号名已被使用',1,'unique',1), // 在新增的时候验证name字段是否唯一
     array('email','email','Email 非法'), //todo: 邮箱的唯一性
-    array('password','require','缺少密码'),
+    array('pwd','require','缺少密码'),
     );
 
     protected $_link = array(
@@ -47,8 +48,11 @@ class UserModel extends RelationModel{
 
     public function signup($data)
     {
-        $data['pwd'] = md5($data['pwd']);
+        if ($data['pwd']!='') {
+            $data['pwd'] = md5($data['pwd']);    
+        }
         $data['addtime'] = date('Y-m-d');
+
         if (!$this->checkemail($data['email'])) {
             return "邮箱已经被使用";
         }

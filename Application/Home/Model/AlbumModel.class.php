@@ -25,6 +25,7 @@ class AlbumModel extends RelationModel{
     	$data['userid'] = $uid;
     	$data['name'] = 'default';
     	$data['description'] = '初始默认相册';
+        $data['addtime'] = date("Y-m-d");
     	$this->add($data);
     }
 }

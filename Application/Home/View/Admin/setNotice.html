@@ -24,8 +24,17 @@
 		$('#notice_submit').click(function(){
 			var content = $('#notice_content').val();
 			$.get('__URL__/alert?content='+content,function(res){
-				alert('发布成功');
-				location.reload() 
+				if (res[0]!=0)
+				{
+					alert('发布成功');
+					location.reload() 
+				}
+				else
+				{
+					alert(res[1]);
+				}
+				// console.log(res);
+				
 			})
 		})
 	</script>

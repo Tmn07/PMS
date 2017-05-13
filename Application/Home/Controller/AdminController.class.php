@@ -8,6 +8,14 @@ class AdminController extends BaseController {
 		$this->display();
 	}
 
+    // public function show(){
+    //     if (session("?adminid"))
+    //     {
+    //         $this->assign("datas",$datas);
+    //         $this->display('setNotice');
+    //     }
+    // }
+
     public function signin(){
     	$data = I("post.");
     	$status = M('admin')->where(array('name' => $data['username'],'pwd' => $data['pwd']))->find();
@@ -27,9 +35,17 @@ class AdminController extends BaseController {
     		$data = I("get.");
     		$arr = M('user')->field("id")->select();
     		foreach ($arr as $key => $value) {
-    			$tmp = array('userid'=>$value['id'],'description'=>$data['content'],"type"=>"warning");
-    			M('notice')->add($tmp);
-                dump("ok");
+                if ($data['content'] == '') {
+                    // alert("内容不能为空");
+                    $this->ajaxReturn(array(0,"内容不能为空"));
+                }
+                else
+                {
+                    $tmp = array('userid'=>$value['id'],'description'=>$data['content'],"type"=>"warning");
+                    M('notice')->add($tmp);
+                    dump("ok");
+                }
+
     		}
     	}
     	else{

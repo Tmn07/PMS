@@ -2,17 +2,24 @@
 namespace Home\Controller;
 use Think\Controller;
 class ApiController extends BaseController {
+    // public function test()
+    // {
+    //     dump(date("Y-m-d"));
+    // }
 	public function setComment()
 	{
 		$arr = I("get.");
+
 		$data = array('photoid' => $arr['pid'],
 					'guestname' => $arr['name'],
 					'addtime'  => date('Y-m-d H:i:s'),
 					'content' => $arr['content'],
 					);
 		$re = M('comment')->add($data);
-
-		D("Notice")->commentNotice($arr['pid'],$arr['sid']);
+        
+        if ($arr['name']!=session('user')) {
+            D("Notice")->commentNotice($arr['pid'],$arr['sid']);
+        }
 
 		if (is_numeric($re)) {
 			// return $re;
@@ -84,9 +91,6 @@ class ApiController extends BaseController {
         else{
             M("Notice")->where(array("href"=>I("get.sid"),"userid"=>session("userid"),"readed"=>"0"))->setField('readed','1');
         }
-
-
-
     	return 0;
     }
 
@@ -99,7 +103,7 @@ class ApiController extends BaseController {
             if (!isset($x))
             {
                 $arr['share'] = 1;
-                $ret = $model->save($arr);
+                $ret = $model->lock(true)->save($arr);
                 $data['photoid'] = $arr['id'];
                 $data['url'] = session('user').'/'.$arr['filename'];
                 $sid = M('share')->add($data);
