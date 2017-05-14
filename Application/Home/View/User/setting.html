@@ -1,0 +1,30 @@
+<extend name="public:template" />
+
+<block name="main">
+
+<link rel="stylesheet" type="text/css" href="__CSS__/search.css">
+<style type="text/css">
+	th{
+		padding: 10px;
+	}
+	.setting_container{
+		padding: 50px;
+	}
+</style>
+<div class="setting_container">
+	<table>
+		<tr>
+			<th>type</th>
+			<th>content</th>
+			<th>option</th>
+		</tr>
+		<volist name='datas' id='vo'>
+			<tr>
+				<td>{$vo.type}</td>
+				<td><input value="{$vo.content}" type="text"> </input> </td>
+				<td><input value="submit" type="submit"></input></td>
+			</tr>
+		</volist>	
+	</table>
+</div>
+</block>

@@ -28,7 +28,7 @@ body {
 #page-wrapper {
     width: 100%;
     padding: 0;
-    background-color: #31b0d5;
+    background-color: {$Think.session.page-wrapper};
 }
 
 .huge {

@@ -2,10 +2,21 @@
 namespace Home\Controller;
 use Think\Controller;
 class ApiController extends BaseController {
-    // public function test()
+    // public function setsetting()
     // {
-    //     dump(date("Y-m-d"));
+    //     $arr = I("get.");
+        
     // }
+    public function test()
+    {
+            $Model = new \Think\Model();
+            $datas = $Model->query("SELECT setting.id, setting.type, setting.content FROM user, setting where user.id=setting.userid and user.id=".session("userid"));
+            
+            foreach ($datas  as $key => $value) {
+                session($value['type'], $value['content']);
+            }
+            dump(session("page-wrapper"));
+    }
 	public function setComment()
 	{
 		$arr = I("get.");

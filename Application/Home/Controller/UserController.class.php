@@ -32,6 +32,21 @@ class UserController extends BaseController {
         // 检查登录
         if (session('?user')) {
             // dump(session('user'));
+            // 读取设置
+            $Model = new \Think\Model();
+            $datas = $Model->query("SELECT setting.id, setting.type, setting.content FROM user, setting where user.id=setting.userid and user.id=".session("userid"));
+            foreach ($datas  as $key => $value) {
+                session($value['type'], $value['content']);
+            }
+            if (!session("?side-navhover")) {
+                session("side-navhover","#0822EE");
+            }
+            if (!session("?side-nav")) {
+                session("side-nav","#086ed5");
+            }
+            if (!session("?navbar")) {
+                session("navbar","#086ed5");
+            }
         }
         else{
             $this->redirect('index/index');
@@ -44,7 +59,14 @@ class UserController extends BaseController {
         $this->assign('albums',$arr['album']);
         $this->display('album');
     }
-
+    public function setting()
+    {
+        $Model = new \Think\Model();
+        $datas = $Model->query("SELECT setting.id, setting.type, setting.content FROM user, setting where user.id=setting.userid and user.id=".session("userid"));
+        $this->assign("datas", $datas);
+        // dump($datas);
+        $this->display();
+    }
     public function map()
     {
         $arr = M("photo")->where(array("userid"=>session("userid")))->select();

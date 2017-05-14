@@ -8,19 +8,14 @@ class AdminController extends BaseController {
 		$this->display();
 	}
 
-    // public function show(){
-    //     if (session("?adminid"))
-    //     {
-    //         $this->assign("datas",$datas);
-    //         $this->display('setNotice');
-    //     }
-    // }
-
     public function signin(){
     	$data = I("post.");
     	$status = M('admin')->where(array('name' => $data['username'],'pwd' => $data['pwd']))->find();
-    	if (isset($status)) {
+    	if (isset($status) || session("?adminid")) {
 			session("adminid",$status['id']);
+            $Model = new \Think\Model(); // 实例化一个model对象 没有对应任何数据表
+            $datas = $Model->query("SELECT * FROM `manage_data`");
+            $this->assign("datas",$datas);
             $this->display('setNotice');
     	}
     	else{

@@ -7,8 +7,34 @@
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/lib/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
 </head>
+<style type="text/css">
+	th{
+		padding: 10px;
+	}
+</style>
 <body>
 	<div class="col-md-6 set_notice">
+		<table>
+			<tr>
+				<th>id</th>
+				<th>username</th>
+				<th>photos_num</th>
+				<th>albums_num</th>
+				<th>notices_num</th>
+			</tr>
+			<volist name='datas' id='vo'>
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.username}</td>
+					<td>{$vo.albums_num}</td>
+					<td>{$vo.photos_num}</td>
+					<td>{$vo.notices_num}</td>
+				</tr>
+			</volist>	
+		</table>
+		<br />
+		<br />
+		<br />
 		<form role="form">
 		  	<div class="form-group">
 		    	<textarea id="notice_content" class="form-control" rows="6"></textarea>
@@ -19,7 +45,9 @@
 		</form>
 	</div>
 
+	<div class="col-md-6 set_notice">
 
+	</div>
 	<script type="text/javascript">
 		$('#notice_submit').click(function(){
 			var content = $('#notice_content').val();
